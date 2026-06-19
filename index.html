@@ -840,7 +840,7 @@ function renderGrid(){
           ${filtered.map(s=>`
             <tr>
               <td class="td-thumb">
-                <img src="images/${s.id}.JPEG" alt="${escapeHtml(s.club)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <img src="images/${s.id}.jpg" alt="${escapeHtml(s.club)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                 <div class="no-img" style="display:none;">—</div>
               </td>
               <td style="color:#a89c84;">${s.id}</td>
@@ -869,7 +869,7 @@ function renderGrid(){
       <div class="card">
         <div class="badge">${s.type}</div>
         <div class="photo">
-          <img src="images/${s.id}.JPEG" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <img src="images/${s.id}.jpg" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <span class="placeholder" style="display:none;">No photo</span>
         </div>
         <div class="info">
