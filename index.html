@@ -473,11 +473,6 @@
     <h2 class="section-title" id="form-title">Add a shirt to the collection</h2>
     <div class="form-card">
       <form id="shirt-form">
-        <div>
-          <label for="image-filename">Image filename</label>
-          <input type="text" id="image-filename" placeholder="e.g. barcelona-home-2324.jpg">
-        </div>
-        <img id="image-preview" alt="Preview" style="display:none;max-width:100%;max-height:180px;border-radius:6px;margin-top:10px;">
 
         <div class="form-grid" style="margin-top:18px;">
           <div class="full">
@@ -683,21 +678,6 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
   });
 });
 
-/* ============================================================
-   IMAGE FILENAME INPUT
-   ============================================================ */
-const imageFilenameInput = document.getElementById('image-filename');
-const imagePreview = document.getElementById('image-preview');
-
-imageFilenameInput.addEventListener('input', ()=>{
-  const val = imageFilenameInput.value.trim();
-  if(val){
-    imagePreview.src = 'images/' + val;
-    imagePreview.style.display = 'block';
-  } else {
-    imagePreview.style.display = 'none';
-  }
-});
 
 /* ============================================================
    FORM SUBMIT (add / edit)
@@ -708,9 +688,7 @@ const cancelEditBtn = document.getElementById('cancel-edit');
 form.addEventListener('submit', (e)=>{
   e.preventDefault();
 
-  const filename = imageFilenameInput.value.trim() || null;
   const record = {
-    image: filename,
     club: document.getElementById('f-club').value.trim(),
     season: document.getElementById('f-season').value.trim(),
     type: document.getElementById('f-type').value,
@@ -722,10 +700,6 @@ form.addEventListener('submit', (e)=>{
 
   if(editingId){
     record.id = editingId;
-    if(!filename){
-      const existing = allShirts.find(s=>s.id===editingId);
-      record.image = existing ? existing.image : null;
-    }
     const idx = allShirts.findIndex(s=>s.id===editingId);
     if(idx !== -1) allShirts[idx] = record;
   } else {
@@ -741,9 +715,6 @@ cancelEditBtn.addEventListener('click', resetForm);
 
 function resetForm(){
   form.reset();
-  imageFilenameInput.value = '';
-  imagePreview.src = '';
-  imagePreview.style.display = 'none';
   editingId = null;
   document.getElementById('form-title').textContent = 'Add a shirt to the collection';
   document.getElementById('submit-btn').textContent = 'Add to collection';
@@ -761,14 +732,6 @@ function startEdit(id){
   document.getElementById('f-country').value = shirt.country;
   document.getElementById('f-brand').value = shirt.brand;
   document.getElementById('f-year').value = shirt.year;
-  imageFilenameInput.value = shirt.image || '';
-  if(shirt.image){
-    imagePreview.src = 'images/' + shirt.image;
-    imagePreview.style.display = 'block';
-  } else {
-    imagePreview.style.display = 'none';
-  }
-
   document.getElementById('form-title').textContent = 'Edit shirt';
   document.getElementById('submit-btn').textContent = 'Save changes';
   cancelEditBtn.style.display = 'inline-block';
@@ -877,9 +840,8 @@ function renderGrid(){
           ${filtered.map(s=>`
             <tr>
               <td class="td-thumb">
-                ${s.image
-                  ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)}">`
-                  : `<div class="no-img">—</div>`}
+                <img src="images/${s.id}.jpg" alt="${escapeHtml(s.club)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="no-img" style="display:none;">—</div>
               </td>
               <td style="color:#a89c84;">${s.id}</td>
               <td>
@@ -907,7 +869,8 @@ function renderGrid(){
       <div class="card">
         <div class="badge">${s.type}</div>
         <div class="photo">
-          ${s.image ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}">` : `<span class="placeholder">No photo</span>`}
+          <img src="images/${s.id}.jpg" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <span class="placeholder" style="display:none;">No photo</span>
         </div>
         <div class="info">
           <h3>${escapeHtml(s.club)}</h3>
