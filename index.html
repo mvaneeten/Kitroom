@@ -138,26 +138,7 @@
     outline:none;
     border-color:var(--gold);
   }
-  .image-drop{
-    border:2px dashed var(--line);
-    border-radius:8px;
-    padding:18px;
-    text-align:center;
-    cursor:pointer;
-    background:var(--paper);
-    transition:border-color .15s;
-  }
-  .image-drop:hover{border-color:var(--gold);}
-  .image-drop img{
-    max-width:100%;
-    max-height:180px;
-    border-radius:6px;
-    margin-top:10px;
-    display:none;
-  }
-  .image-drop span.hint{font-size:13px;color:#7c7464;}
-
-  .form-actions{
+.form-actions{
     margin-top:20px;
     display:flex;
     gap:10px;
@@ -405,24 +386,24 @@
   <h1>The Kit <span>Room</span></h1>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
-    <button data-view="add" class="active">Add a shirt</button>
-    <button data-view="collection">Collection</button>
+    <button data-view="collection" class="active">Collection</button>
     <button data-view="map">World map</button>
+    <button data-view="add">Add a shirt</button>
   </nav>
 </header>
 
 <main>
 
   <!-- ADD VIEW -->
-  <section id="view-add" class="view active">
+  <section id="view-add" class="view">
     <h2 class="section-title" id="form-title">Add a shirt to the collection</h2>
     <div class="form-card">
       <form id="shirt-form">
-        <div class="image-drop" id="image-drop">
-          <span class="hint">Click to choose a photo of the shirt (stored locally in your browser)</span>
-          <img id="image-preview" alt="Preview">
-          <input type="file" id="image-input" accept="image/*" style="display:none;">
+        <div>
+          <label for="image-filename">Image filename</label>
+          <input type="text" id="image-filename" placeholder="e.g. barcelona-home-2324.jpg">
         </div>
+        <img id="image-preview" alt="Preview" style="display:none;max-width:100%;max-height:180px;border-radius:6px;margin-top:10px;">
 
         <div class="form-grid" style="margin-top:18px;">
           <div class="full">
@@ -481,13 +462,14 @@
         <div class="form-actions">
           <button type="submit" class="primary" id="submit-btn">Add to collection</button>
           <button type="button" class="secondary" id="cancel-edit" style="display:none;">Cancel</button>
+          <button type="button" class="secondary" onclick="downloadShirtsJSON()">Download shirts.json</button>
         </div>
       </form>
     </div>
   </section>
 
   <!-- COLLECTION VIEW -->
-  <section id="view-collection" class="view">
+  <section id="view-collection" class="view active">
     <h2 class="section-title">Your collection</h2>
 
     <div class="filter-bar">
@@ -579,54 +561,23 @@
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <script>
 /* ============================================================
-   DATABASE (IndexedDB) — shirts stored locally in the browser
+   DATA — loaded from shirts.json, persisted via download
    ============================================================ */
-const DB_NAME = 'kitRoomDB';
-const STORE = 'shirts';
-let db;
-
-function openDB(){
-  return new Promise((resolve, reject)=>{
-    const req = indexedDB.open(DB_NAME, 1);
-    req.onupgradeneeded = (e)=>{
-      const _db = e.target.result;
-      if(!_db.objectStoreNames.contains(STORE)){
-        _db.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
-      }
-    };
-    req.onsuccess = (e)=>{ db = e.target.result; resolve(db); };
-    req.onerror = (e)=> reject(e);
-  });
+async function loadShirtsFromJSON(){
+  const res = await fetch('shirts.json');
+  const data = await res.json();
+  // ensure every record has a stable numeric id
+  data.forEach((s, i)=>{ if(!s.id) s.id = i + 1; });
+  return data;
 }
 
-function dbGetAll(){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE, 'readonly');
-    const store = tx.objectStore(STORE);
-    const req = store.getAll();
-    req.onsuccess = ()=> resolve(req.result);
-    req.onerror = (e)=> reject(e);
-  });
-}
-
-function dbPut(record){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE, 'readwrite');
-    const store = tx.objectStore(STORE);
-    const req = record.id ? store.put(record) : store.add(record);
-    req.onsuccess = ()=> resolve(req.result);
-    req.onerror = (e)=> reject(e);
-  });
-}
-
-function dbDelete(id){
-  return new Promise((resolve, reject)=>{
-    const tx = db.transaction(STORE, 'readwrite');
-    const store = tx.objectStore(STORE);
-    const req = store.delete(id);
-    req.onsuccess = ()=> resolve();
-    req.onerror = (e)=> reject(e);
-  });
+function downloadShirtsJSON(){
+  const blob = new Blob([JSON.stringify(allShirts, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'shirts.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 /* ============================================================
@@ -652,24 +603,19 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
 });
 
 /* ============================================================
-   IMAGE UPLOAD
+   IMAGE FILENAME INPUT
    ============================================================ */
-const imageDrop = document.getElementById('image-drop');
-const imageInput = document.getElementById('image-input');
+const imageFilenameInput = document.getElementById('image-filename');
 const imagePreview = document.getElementById('image-preview');
-let currentImageData = null;
 
-imageDrop.addEventListener('click', ()=> imageInput.click());
-imageInput.addEventListener('change', ()=>{
-  const file = imageInput.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    currentImageData = e.target.result;
-    imagePreview.src = currentImageData;
+imageFilenameInput.addEventListener('input', ()=>{
+  const val = imageFilenameInput.value.trim();
+  if(val){
+    imagePreview.src = 'images/' + val;
     imagePreview.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
+  } else {
+    imagePreview.style.display = 'none';
+  }
 });
 
 /* ============================================================
@@ -678,11 +624,12 @@ imageInput.addEventListener('change', ()=>{
 const form = document.getElementById('shirt-form');
 const cancelEditBtn = document.getElementById('cancel-edit');
 
-form.addEventListener('submit', async (e)=>{
+form.addEventListener('submit', (e)=>{
   e.preventDefault();
 
+  const filename = imageFilenameInput.value.trim() || null;
   const record = {
-    image: currentImageData,
+    image: filename,
     club: document.getElementById('f-club').value.trim(),
     season: document.getElementById('f-season').value.trim(),
     type: document.getElementById('f-type').value,
@@ -694,18 +641,18 @@ form.addEventListener('submit', async (e)=>{
 
   if(editingId){
     record.id = editingId;
-    // keep existing image if no new one was chosen
-    if(!currentImageData){
+    if(!filename){
       const existing = allShirts.find(s=>s.id===editingId);
       record.image = existing ? existing.image : null;
     }
+    const idx = allShirts.findIndex(s=>s.id===editingId);
+    if(idx !== -1) allShirts[idx] = record;
+  } else {
+    record.id = Date.now();
+    allShirts.unshift(record);
   }
 
-  await dbPut(record);
-  await loadShirts();
   resetForm();
-
-  // jump to collection after adding
   document.querySelector('nav.tabs button[data-view="collection"]').click();
 });
 
@@ -713,7 +660,7 @@ cancelEditBtn.addEventListener('click', resetForm);
 
 function resetForm(){
   form.reset();
-  currentImageData = null;
+  imageFilenameInput.value = '';
   imagePreview.src = '';
   imagePreview.style.display = 'none';
   editingId = null;
@@ -733,13 +680,13 @@ function startEdit(id){
   document.getElementById('f-country').value = shirt.country;
   document.getElementById('f-brand').value = shirt.brand;
   document.getElementById('f-year').value = shirt.year;
+  imageFilenameInput.value = shirt.image || '';
   if(shirt.image){
-    imagePreview.src = shirt.image;
+    imagePreview.src = 'images/' + shirt.image;
     imagePreview.style.display = 'block';
   } else {
     imagePreview.style.display = 'none';
   }
-  currentImageData = null; // only set if user picks a new file
 
   document.getElementById('form-title').textContent = 'Edit shirt';
   document.getElementById('submit-btn').textContent = 'Save changes';
@@ -748,10 +695,9 @@ function startEdit(id){
   document.querySelector('nav.tabs button[data-view="add"]').click();
 }
 
-async function removeShirt(id){
+function removeShirt(id){
   if(!confirm('Remove this shirt from your collection?')) return;
-  await dbDelete(id);
-  await loadShirts();
+  allShirts = allShirts.filter(s=>s.id!==id);
   renderGrid();
   renderMap();
 }
@@ -760,8 +706,7 @@ async function removeShirt(id){
    LOAD SHIRTS
    ============================================================ */
 async function loadShirts(){
-  allShirts = await dbGetAll();
-  allShirts.sort((a,b)=> (b.id||0) - (a.id||0));
+  allShirts = await loadShirtsFromJSON();
 }
 
 /* ============================================================
@@ -815,7 +760,7 @@ function renderGrid(){
     <div class="card">
       <div class="badge">${s.type}</div>
       <div class="photo">
-        ${s.image ? `<img src="${s.image}" alt="${s.club} ${s.season}">` : `<span class="placeholder">No photo</span>`}
+        ${s.image ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}">` : `<span class="placeholder">No photo</span>`}
       </div>
       <div class="info">
         <h3>${escapeHtml(s.club)}</h3>
@@ -823,6 +768,8 @@ function renderGrid(){
           <b>${escapeHtml(s.season)}</b> · ${escapeHtml(s.brand)}<br>
           ${escapeHtml(s.country)}, ${escapeHtml(s.continent)}<br>
           Purchased: ${s.year}
+          ${s.player ? `<br><span style="color:var(--pitch);font-weight:600;">${escapeHtml(s.player)}</span>` : ''}
+          ${s.notes ? `<br><span style="font-style:italic;color:#7c7464;">${escapeHtml(s.notes)}</span>` : ''}
         </div>
         <div class="actions">
           <button onclick="startEdit(${s.id})">Edit</button>
@@ -929,7 +876,6 @@ window.addEventListener('resize', ()=>{
    INIT
    ============================================================ */
 (async function init(){
-  await openDB();
   await loadShirts();
   await loadWorldData();
   renderGrid();
