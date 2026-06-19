@@ -542,7 +542,7 @@
       <div class="map-tooltip" id="map-tooltip"></div>
       <div class="map-legend">
         <span>Fewer</span>
-        <div class="legend-swatch" id="legend-gradient" style="background:linear-gradient(90deg, #ece4d3, #163a2f);"></div>
+        <div class="legend-swatch" id="legend-gradient" style="background:linear-gradient(90deg, #f5d878, #7a4800);"></div>
         <span>More</span>
       </div>
     </div>
@@ -823,7 +823,7 @@ function renderMap(){
   document.getElementById('stat-clubs').textContent = clubs;
 
   const maxCount = Math.max(1, ...Object.values(counts));
-  const colorScale = d3.scaleSequential().domain([1, maxCount]).interpolator(d3.interpolateRgb('#d9a629', '#163a2f'));
+  const colorScale = d3.scaleSequential().domain([1, maxCount]).interpolator(d3.interpolateRgb('#f5d878', '#7a4800'));
 
   const container = document.getElementById('worldmap-container');
   container.innerHTML = '';
