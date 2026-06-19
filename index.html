@@ -824,9 +824,20 @@ function renderGrid(){
   });
 
   const [sortField, sortDir] = sortBy.value.split('-');
+  const typeOrder = {'Home':0,'Away':1,'Third':2,'Fourth':3,'Other':4};
   filtered.sort((a, b) => {
-    let av = sortField === 'id' ? a.id : sortField === 'club' ? a.club.toLowerCase() : sortField === 'season' ? a.season : a.year;
-    let bv = sortField === 'id' ? b.id : sortField === 'club' ? b.club.toLowerCase() : sortField === 'season' ? b.season : b.year;
+    let av, bv;
+    if(sortField === 'id')     { av = a.id;                  bv = b.id; }
+    else if(sortField === 'club')   { av = a.club.toLowerCase();   bv = b.club.toLowerCase(); }
+    else if(sortField === 'year')   { av = a.year;                 bv = b.year; }
+    else { // season
+      av = a.season; bv = b.season;
+      if(av === bv){
+        const clubCmp = a.club.toLowerCase().localeCompare(b.club.toLowerCase());
+        if(clubCmp !== 0) return sortDir === 'asc' ? clubCmp : -clubCmp;
+        return (typeOrder[a.type]??9) - (typeOrder[b.type]??9);
+      }
+    }
     if(av < bv) return sortDir === 'asc' ? -1 : 1;
     if(av > bv) return sortDir === 'asc' ? 1 : -1;
     return 0;
