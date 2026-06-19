@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Kit Room — Shirt Collection</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#163a2f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kit Room">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch:#163a2f;
+    --pitch-dark:#0e2a21;
+    --paper:#f6f1e7;
+    --paper-dim:#ece4d3;
+    --ink:#20281f;
+    --gold:#d9a629;
+    --line:#cdc3ac;
+    --red:#bd4330;
+    --card-bg:#ffffff;
+    --radius:10px;
+    --shadow:0 4px 14px rgba(15,42,33,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Work Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  /* ---------- Top bar (scoreboard) ---------- */
+  header.top{
+    background:var(--pitch);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 2px, transparent 2px, transparent 40px);
+    color:var(--paper);
+    padding:22px 28px 16px;
+    border-bottom:5px solid var(--gold);
+  }
+  header.top h1{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    letter-spacing:2px;
+    margin:0;
+    font-size:clamp(28px, 5vw, 42px);
+    text-transform:uppercase;
+  }
+  header.top h1 span{color:var(--gold);}
+  header.top p{margin:4px 0 16px;opacity:0.75;font-size:14px;letter-spacing:0.5px;}
+  nav.tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  nav.tabs button{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    font-size:14px;
+    background:transparent;
+    color:var(--paper);
+    border:2px solid rgba(246,241,231,0.25);
+    border-radius:999px;
+    padding:8px 20px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  nav.tabs button:hover{border-color:var(--gold);}
+  nav.tabs button.active{
+    background:var(--gold);
+    color:var(--pitch-dark);
+    border-color:var(--gold);
+  }
+
+  main{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px;
+  }
+  .view{display:none;}
+  .view.active{display:block;}
+
+  h2.section-title{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:24px;
+    margin:0 0 18px;
+    color:var(--pitch);
+    border-bottom:3px solid var(--line);
+    padding-bottom:8px;
+  }
+
+  /* ---------- Form ---------- */
+  .form-card{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px;
+    max-width:680px;
+  }
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .form-grid .full{grid-column:1 / -1;}
+  label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--pitch);
+    margin-bottom:6px;
+  }
+  input, select{
+    width:100%;
+    padding:10px 12px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    border:1.5px solid var(--line);
+    border-radius:6px;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  input:focus, select:focus{
+    outline:none;
+    border-color:var(--gold);
+  }
+  .image-drop{
+    border:2px dashed var(--line);
+    border-radius:8px;
+    padding:18px;
+    text-align:center;
+    cursor:pointer;
+    background:var(--paper);
+    transition:border-color .15s;
+  }
+  .image-drop:hover{border-color:var(--gold);}
+  .image-drop img{
+    max-width:100%;
+    max-height:180px;
+    border-radius:6px;
+    margin-top:10px;
+    display:none;
+  }
+  .image-drop span.hint{font-size:13px;color:#7c7464;}
+
+  .form-actions{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+  }
+  button.primary{
+    font-family:'Anton', sans-serif;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    font-size:14px;
+    background:var(--pitch);
+    color:var(--paper);
+    border:none;
+    border-radius:6px;
+    padding:12px 26px;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  button.primary:hover{background:var(--pitch-dark);}
+  button.secondary{
+    font-family:'Anton', sans-serif;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    font-size:14px;
+    background:transparent;
+    color:var(--pitch);
+    border:2px solid var(--line);
+    border-radius:6px;
+    padding:10px 24px;
+    cursor:pointer;
+  }
+  button.secondary:hover{border-color:var(--pitch);}
+
+  /* ---------- Filters ---------- */
+  .filter-bar{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    margin-bottom:22px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+    gap:12px;
+    align-items:end;
+  }
+  .filter-bar label{margin-bottom:4px;}
+  .filter-bar .clear-wrap{display:flex;align-items:flex-end;}
+
+  .results-count{
+    font-size:13px;
+    color:#7c7464;
+    margin-bottom:14px;
+    letter-spacing:0.5px;
+  }
+
+  /* ---------- Cards grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .card .badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--gold);
+    color:var(--pitch-dark);
+    font-family:'Anton', sans-serif;
+    font-size:13px;
+    letter-spacing:1px;
+    padding:4px 10px;
+    border-radius:999px;
+    text-transform:uppercase;
+    box-shadow:0 2px 6px rgba(0,0,0,0.18);
+  }
+  .card .photo{
+    width:100%;
+    aspect-ratio:1/1;
+    background:var(--paper-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .card .photo img{width:100%;height:100%;object-fit:contain;}
+  .card .photo .placeholder{font-size:13px;color:#a89c84;font-family:'Anton',sans-serif;letter-spacing:1px;text-transform:uppercase;}
+  .card .info{padding:14px 14px 12px;flex:1;display:flex;flex-direction:column;}
+  .card .info h3{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    letter-spacing:1px;
+    font-size:18px;
+    margin:0 0 6px;
+    color:var(--pitch);
+  }
+  .card .info .meta{font-size:13px;color:#5e564a;line-height:1.5;margin-bottom:10px;}
+  .card .info .meta b{color:var(--ink);}
+  .card .actions{
+    margin-top:auto;
+    display:flex;
+    gap:8px;
+  }
+  .card .actions button{
+    flex:1;
+    font-size:12px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-family:'Anton',sans-serif;
+    padding:8px;
+    border-radius:6px;
+    cursor:pointer;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    color:var(--pitch);
+  }
+  .card .actions button.del{color:var(--red);border-color:#e6c9c2;}
+  .card .actions button:hover{border-color:var(--gold);}
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:#8a8071;
+  }
+  .empty-state .num{
+    font-family:'Anton',sans-serif;
+    font-size:48px;
+    color:var(--gold);
+    letter-spacing:2px;
+  }
+
+  /* ---------- Map ---------- */
+  .map-stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+  .stat-box{
+    background:var(--pitch);
+    color:var(--paper);
+    border-radius:var(--radius);
+    padding:14px 22px;
+    min-width:140px;
+    box-shadow:var(--shadow);
+  }
+  .stat-box .num{
+    font-family:'Anton',sans-serif;
+    font-size:30px;
+    color:var(--gold);
+    line-height:1;
+  }
+  .stat-box .label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    opacity:0.8;
+    margin-top:4px;
+  }
+  .map-wrap{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:14px;
+    position:relative;
+  }
+  #worldmap{width:100%;height:auto;display:block;}
+  #worldmap path{
+    stroke:var(--paper);
+    stroke-width:0.5;
+    transition:fill .2s;
+    cursor:pointer;
+  }
+  #worldmap path.has-shirts:hover{stroke:var(--gold);stroke-width:1.5;}
+  .map-tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:var(--pitch-dark);
+    color:var(--paper);
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:13px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);
+    display:none;
+    white-space:nowrap;
+    z-index:10;
+    font-family:'Work Sans',sans-serif;
+  }
+  .map-tooltip b{color:var(--gold);}
+  .map-legend{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:14px;
+    font-size:12px;
+    color:#7c7464;
+    letter-spacing:0.5px;
+  }
+  .legend-swatch{width:50px;height:12px;border-radius:3px;}
+
+  .country-table{
+    margin-top:24px;
+  }
+  .country-table table{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .country-table th, .country-table td{
+    text-align:left;
+    padding:10px 16px;
+    font-size:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .country-table th{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--pitch);
+    background:var(--paper-dim);
+  }
+  .country-table tr:last-child td{border-bottom:none;}
+
+  @media (max-width:600px){
+    .form-grid{grid-template-columns:1fr;}
+    header.top{padding:18px 16px 14px;}
+    main{padding:18px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>The Kit <span>Room</span></h1>
+  <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
+  <nav class="tabs">
+    <button data-view="add" class="active">Add a shirt</button>
+    <button data-view="collection">Collection</button>
+    <button data-view="map">World map</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ADD VIEW -->
+  <section id="view-add" class="view active">
+    <h2 class="section-title" id="form-title">Add a shirt to the collection</h2>
+    <div class="form-card">
+      <form id="shirt-form">
+        <div class="image-drop" id="image-drop">
+          <span class="hint">Click to choose a photo of the shirt (stored locally in your browser)</span>
+          <img id="image-preview" alt="Preview">
+          <input type="file" id="image-input" accept="image/*" style="display:none;">
+        </div>
+
+        <div class="form-grid" style="margin-top:18px;">
+          <div class="full">
+            <label for="f-club">Club</label>
+            <input type="text" id="f-club" placeholder="e.g. FC Barcelona" required>
+          </div>
+
+          <div>
+            <label for="f-season">Season</label>
+            <input type="text" id="f-season" placeholder="e.g. 2023/24" required>
+          </div>
+
+          <div>
+            <label for="f-type">Type</label>
+            <select id="f-type" required>
+              <option value="">Choose type…</option>
+              <option>Home</option>
+              <option>Away</option>
+              <option>Third</option>
+              <option>Fourth</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-continent">Continent</label>
+            <select id="f-continent" required>
+              <option value="">Choose continent…</option>
+              <option>Europe</option>
+              <option>Africa</option>
+              <option>Asia</option>
+              <option>North America</option>
+              <option>South America</option>
+              <option>Oceania</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-country">Country</label>
+            <select id="f-country" required>
+              <option value="">Loading countries…</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="f-brand">Brand</label>
+            <input type="text" id="f-brand" placeholder="e.g. Nike, Adidas, Puma" required>
+          </div>
+
+          <div>
+            <label for="f-year">Year of purchase</label>
+            <input type="number" id="f-year" min="1950" max="2100" placeholder="e.g. 2024" required>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="primary" id="submit-btn">Add to collection</button>
+          <button type="button" class="secondary" id="cancel-edit" style="display:none;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- COLLECTION VIEW -->
+  <section id="view-collection" class="view">
+    <h2 class="section-title">Your collection</h2>
+
+    <div class="filter-bar">
+      <div>
+        <label for="filt-club">Club</label>
+        <input type="text" id="filt-club" placeholder="Search club…">
+      </div>
+      <div>
+        <label for="filt-season">Season</label>
+        <input type="text" id="filt-season" placeholder="Search season…">
+      </div>
+      <div>
+        <label for="filt-type">Type</label>
+        <select id="filt-type">
+          <option value="">All types</option>
+          <option>Home</option>
+          <option>Away</option>
+          <option>Third</option>
+          <option>Fourth</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="filt-continent">Continent</label>
+        <select id="filt-continent">
+          <option value="">All continents</option>
+          <option>Europe</option>
+          <option>Africa</option>
+          <option>Asia</option>
+          <option>North America</option>
+          <option>South America</option>
+          <option>Oceania</option>
+        </select>
+      </div>
+      <div>
+        <label for="filt-country">Country</label>
+        <select id="filt-country">
+          <option value="">All countries</option>
+        </select>
+      </div>
+      <div>
+        <label for="filt-brand">Brand</label>
+        <input type="text" id="filt-brand" placeholder="Search brand…">
+      </div>
+      <div>
+        <label for="filt-year">Year</label>
+        <input type="number" id="filt-year" placeholder="Any year">
+      </div>
+      <div class="clear-wrap">
+        <button type="button" class="secondary" id="clear-filters">Clear filters</button>
+      </div>
+    </div>
+
+    <div class="results-count" id="results-count"></div>
+    <div class="grid" id="shirt-grid"></div>
+  </section>
+
+  <!-- MAP VIEW -->
+  <section id="view-map" class="view">
+    <h2 class="section-title">Around the world</h2>
+
+    <div class="map-stats">
+      <div class="stat-box"><div class="num" id="stat-total">0</div><div class="label">Shirts total</div></div>
+      <div class="stat-box"><div class="num" id="stat-countries">0</div><div class="label">Countries represented</div></div>
+      <div class="stat-box"><div class="num" id="stat-clubs">0</div><div class="label">Different clubs</div></div>
+    </div>
+
+    <div class="map-wrap">
+      <div id="worldmap-container"></div>
+      <div class="map-tooltip" id="map-tooltip"></div>
+      <div class="map-legend">
+        <span>Fewer</span>
+        <div class="legend-swatch" id="legend-gradient" style="background:linear-gradient(90deg, #ece4d3, #163a2f);"></div>
+        <span>More</span>
+      </div>
+    </div>
+
+    <div class="country-table">
+      <table>
+        <thead><tr><th>Country</th><th>Shirts</th></tr></thead>
+        <tbody id="country-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script>
+/* ============================================================
+   DATABASE (IndexedDB) — shirts stored locally in the browser
+   ============================================================ */
+const DB_NAME = 'kitRoomDB';
+const STORE = 'shirts';
+let db;
+
+function openDB(){
+  return new Promise((resolve, reject)=>{
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = (e)=>{
+      const _db = e.target.result;
+      if(!_db.objectStoreNames.contains(STORE)){
+        _db.createObjectStore(STORE, { keyPath:'id', autoIncrement:true });
+      }
+    };
+    req.onsuccess = (e)=>{ db = e.target.result; resolve(db); };
+    req.onerror = (e)=> reject(e);
+  });
+}
+
+function dbGetAll(){
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, 'readonly');
+    const store = tx.objectStore(STORE);
+    const req = store.getAll();
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = (e)=> reject(e);
+  });
+}
+
+function dbPut(record){
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    const req = record.id ? store.put(record) : store.add(record);
+    req.onsuccess = ()=> resolve(req.result);
+    req.onerror = (e)=> reject(e);
+  });
+}
+
+function dbDelete(id){
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    const req = store.delete(id);
+    req.onsuccess = ()=> resolve();
+    req.onerror = (e)=> reject(e);
+  });
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let allShirts = [];
+let editingId = null;
+let countryNames = []; // populated from world map data
+let worldFeatures = null;
+
+/* ============================================================
+   TABS / VIEWS
+   ============================================================ */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+    if(btn.dataset.view === 'collection') renderGrid();
+    if(btn.dataset.view === 'map') renderMap();
+  });
+});
+
+/* ============================================================
+   IMAGE UPLOAD
+   ============================================================ */
+const imageDrop = document.getElementById('image-drop');
+const imageInput = document.getElementById('image-input');
+const imagePreview = document.getElementById('image-preview');
+let currentImageData = null;
+
+imageDrop.addEventListener('click', ()=> imageInput.click());
+imageInput.addEventListener('change', ()=>{
+  const file = imageInput.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    currentImageData = e.target.result;
+    imagePreview.src = currentImageData;
+    imagePreview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ============================================================
+   FORM SUBMIT (add / edit)
+   ============================================================ */
+const form = document.getElementById('shirt-form');
+const cancelEditBtn = document.getElementById('cancel-edit');
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+
+  const record = {
+    image: currentImageData,
+    club: document.getElementById('f-club').value.trim(),
+    season: document.getElementById('f-season').value.trim(),
+    type: document.getElementById('f-type').value,
+    continent: document.getElementById('f-continent').value,
+    country: document.getElementById('f-country').value,
+    brand: document.getElementById('f-brand').value.trim(),
+    year: parseInt(document.getElementById('f-year').value, 10)
+  };
+
+  if(editingId){
+    record.id = editingId;
+    // keep existing image if no new one was chosen
+    if(!currentImageData){
+      const existing = allShirts.find(s=>s.id===editingId);
+      record.image = existing ? existing.image : null;
+    }
+  }
+
+  await dbPut(record);
+  await loadShirts();
+  resetForm();
+
+  // jump to collection after adding
+  document.querySelector('nav.tabs button[data-view="collection"]').click();
+});
+
+cancelEditBtn.addEventListener('click', resetForm);
+
+function resetForm(){
+  form.reset();
+  currentImageData = null;
+  imagePreview.src = '';
+  imagePreview.style.display = 'none';
+  editingId = null;
+  document.getElementById('form-title').textContent = 'Add a shirt to the collection';
+  document.getElementById('submit-btn').textContent = 'Add to collection';
+  cancelEditBtn.style.display = 'none';
+}
+
+function startEdit(id){
+  const shirt = allShirts.find(s=>s.id===id);
+  if(!shirt) return;
+  editingId = id;
+  document.getElementById('f-club').value = shirt.club;
+  document.getElementById('f-season').value = shirt.season;
+  document.getElementById('f-type').value = shirt.type;
+  document.getElementById('f-continent').value = shirt.continent;
+  document.getElementById('f-country').value = shirt.country;
+  document.getElementById('f-brand').value = shirt.brand;
+  document.getElementById('f-year').value = shirt.year;
+  if(shirt.image){
+    imagePreview.src = shirt.image;
+    imagePreview.style.display = 'block';
+  } else {
+    imagePreview.style.display = 'none';
+  }
+  currentImageData = null; // only set if user picks a new file
+
+  document.getElementById('form-title').textContent = 'Edit shirt';
+  document.getElementById('submit-btn').textContent = 'Save changes';
+  cancelEditBtn.style.display = 'inline-block';
+
+  document.querySelector('nav.tabs button[data-view="add"]').click();
+}
+
+async function removeShirt(id){
+  if(!confirm('Remove this shirt from your collection?')) return;
+  await dbDelete(id);
+  await loadShirts();
+  renderGrid();
+  renderMap();
+}
+
+/* ============================================================
+   LOAD SHIRTS
+   ============================================================ */
+async function loadShirts(){
+  allShirts = await dbGetAll();
+  allShirts.sort((a,b)=> (b.id||0) - (a.id||0));
+}
+
+/* ============================================================
+   COLLECTION / FILTERS
+   ============================================================ */
+const filtClub = document.getElementById('filt-club');
+const filtSeason = document.getElementById('filt-season');
+const filtType = document.getElementById('filt-type');
+const filtContinent = document.getElementById('filt-continent');
+const filtCountry = document.getElementById('filt-country');
+const filtBrand = document.getElementById('filt-brand');
+const filtYear = document.getElementById('filt-year');
+
+[filtClub, filtSeason, filtType, filtContinent, filtCountry, filtBrand, filtYear].forEach(el=>{
+  el.addEventListener('input', renderGrid);
+  el.addEventListener('change', renderGrid);
+});
+
+document.getElementById('clear-filters').addEventListener('click', ()=>{
+  filtClub.value=''; filtSeason.value=''; filtType.value=''; filtContinent.value='';
+  filtCountry.value=''; filtBrand.value=''; filtYear.value='';
+  renderGrid();
+});
+
+function renderGrid(){
+  const grid = document.getElementById('shirt-grid');
+  const countEl = document.getElementById('results-count');
+
+  const filtered = allShirts.filter(s=>{
+    if(filtClub.value && !s.club.toLowerCase().includes(filtClub.value.toLowerCase())) return false;
+    if(filtSeason.value && !s.season.toLowerCase().includes(filtSeason.value.toLowerCase())) return false;
+    if(filtType.value && s.type !== filtType.value) return false;
+    if(filtContinent.value && s.continent !== filtContinent.value) return false;
+    if(filtCountry.value && s.country !== filtCountry.value) return false;
+    if(filtBrand.value && !s.brand.toLowerCase().includes(filtBrand.value.toLowerCase())) return false;
+    if(filtYear.value && String(s.year) !== filtYear.value) return false;
+    return true;
+  });
+
+  countEl.textContent = `${filtered.length} shirt${filtered.length===1?'':'s'} shown out of ${allShirts.length} total`;
+
+  if(filtered.length === 0){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <div class="num">0</div>
+      <p>${allShirts.length===0 ? 'No shirts in your collection yet. Add your first one!' : 'No shirts match these filters.'}</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s=>`
+    <div class="card">
+      <div class="badge">${s.type}</div>
+      <div class="photo">
+        ${s.image ? `<img src="${s.image}" alt="${s.club} ${s.season}">` : `<span class="placeholder">No photo</span>`}
+      </div>
+      <div class="info">
+        <h3>${escapeHtml(s.club)}</h3>
+        <div class="meta">
+          <b>${escapeHtml(s.season)}</b> · ${escapeHtml(s.brand)}<br>
+          ${escapeHtml(s.country)}, ${escapeHtml(s.continent)}<br>
+          Purchased: ${s.year}
+        </div>
+        <div class="actions">
+          <button onclick="startEdit(${s.id})">Edit</button>
+          <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   WORLD MAP (D3 + topojson, world-atlas 110m)
+   ============================================================ */
+async function loadWorldData(){
+  const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json());
+  worldFeatures = topojson.feature(world, world.objects.countries).features;
+  countryNames = worldFeatures.map(f=>f.properties.name).sort((a,b)=>a.localeCompare(b));
+  populateCountryDropdowns();
+}
+
+function populateCountryDropdowns(){
+  const opts = countryNames.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+
+  const fCountry = document.getElementById('f-country');
+  fCountry.innerHTML = '<option value="">Choose country…</option>' + opts;
+
+  const filtCountrySel = document.getElementById('filt-country');
+  filtCountrySel.innerHTML = '<option value="">All countries</option>' + opts;
+}
+
+function renderMap(){
+  if(!worldFeatures) return;
+
+  // count shirts per country
+  const counts = {};
+  allShirts.forEach(s=>{
+    if(!s.country) return;
+    counts[s.country] = (counts[s.country]||0) + 1;
+  });
+
+  const total = allShirts.length;
+  const countriesRepresented = Object.keys(counts).length;
+  const clubs = new Set(allShirts.map(s=>s.club.toLowerCase().trim())).size;
+
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-countries').textContent = countriesRepresented;
+  document.getElementById('stat-clubs').textContent = clubs;
+
+  const maxCount = Math.max(1, ...Object.values(counts));
+  const colorScale = d3.scaleSequential().domain([0, maxCount]).interpolator(d3.interpolateRgb('#ece4d3', '#163a2f'));
+
+  const container = document.getElementById('worldmap-container');
+  container.innerHTML = '';
+
+  const width = container.clientWidth || 1000;
+  const height = width * 0.5;
+
+  const svg = d3.select(container).append('svg')
+    .attr('id','worldmap')
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('preserveAspectRatio','xMidYMid meet');
+
+  const projection = d3.geoNaturalEarth1().fitSize([width, height], {type:'FeatureCollection', features: worldFeatures});
+  const path = d3.geoPath().projection(projection);
+
+  const tooltip = document.getElementById('map-tooltip');
+
+  svg.selectAll('path')
+    .data(worldFeatures)
+    .join('path')
+    .attr('d', path)
+    .attr('fill', d=>{
+      const c = counts[d.properties.name] || 0;
+      return c > 0 ? colorScale(c) : '#e6ddca';
+    })
+    .attr('class', d=> (counts[d.properties.name]||0) > 0 ? 'has-shirts' : '')
+    .on('mousemove', (event,d)=>{
+      const c = counts[d.properties.name] || 0;
+      const rect = container.getBoundingClientRect();
+      tooltip.style.display = 'block';
+      tooltip.style.left = (event.clientX - rect.left + 12) + 'px';
+      tooltip.style.top = (event.clientY - rect.top + 12) + 'px';
+      tooltip.innerHTML = `${escapeHtml(d.properties.name)}: <b>${c}</b> shirt${c===1?'':'s'}`;
+    })
+    .on('mouseleave', ()=>{ tooltip.style.display = 'none'; });
+
+  // country table, sorted by count desc
+  const tbody = document.getElementById('country-table-body');
+  const rows = Object.entries(counts).sort((a,b)=> b[1]-a[1]);
+  tbody.innerHTML = rows.length
+    ? rows.map(([name,c])=>`<tr><td>${escapeHtml(name)}</td><td>${c}</td></tr>`).join('')
+    : `<tr><td colspan="2" style="text-align:center;color:#8a8071;">No shirts added yet</td></tr>`;
+}
+
+window.addEventListener('resize', ()=>{
+  if(document.getElementById('view-map').classList.contains('active')) renderMap();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(async function init(){
+  await openDB();
+  await loadShirts();
+  await loadWorldData();
+  renderGrid();
+})();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(err=>{
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+</script>
+
+</body>
+</html>
