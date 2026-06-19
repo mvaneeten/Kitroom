@@ -1,11 +1,12 @@
 // The Kit Room — Service Worker
 // Caches the app shell so it works offline once installed.
 
-const CACHE_NAME = 'kitroom-cache-v1';
+const CACHE_NAME = 'kitroom-cache-v2';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
+  './shirts.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-180.png'
