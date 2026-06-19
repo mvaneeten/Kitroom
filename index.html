@@ -265,6 +265,74 @@
   .card .actions button.del{color:var(--red);border-color:#e6c9c2;}
   .card .actions button:hover{border-color:var(--gold);}
 
+  /* ---------- View toggle ---------- */
+  .view-toggle{display:flex;gap:4px;}
+  .toggle-btn{
+    font-size:18px;
+    background:transparent;
+    border:1.5px solid var(--line);
+    border-radius:6px;
+    width:36px;height:36px;
+    cursor:pointer;
+    color:var(--pitch);
+    display:flex;align-items:center;justify-content:center;
+    transition:all .15s;
+  }
+  .toggle-btn.active{background:var(--pitch);color:var(--paper);border-color:var(--pitch);}
+  .toggle-btn:hover:not(.active){border-color:var(--gold);}
+
+  /* ---------- List view ---------- */
+  .shirt-list{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .shirt-list table{width:100%;border-collapse:collapse;}
+  .shirt-list th{
+    font-family:'Anton',sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--pitch);
+    background:var(--paper-dim);
+    padding:10px 14px;
+    text-align:left;
+    border-bottom:2px solid var(--line);
+  }
+  .shirt-list td{
+    padding:10px 14px;
+    font-size:13px;
+    border-bottom:1px solid var(--line);
+    vertical-align:middle;
+  }
+  .shirt-list tr:last-child td{border-bottom:none;}
+  .shirt-list tr:hover td{background:var(--paper);}
+  .shirt-list .td-thumb{width:48px;}
+  .shirt-list .td-thumb img{
+    width:40px;height:40px;object-fit:contain;
+    border-radius:4px;background:var(--paper-dim);display:block;
+  }
+  .shirt-list .td-thumb .no-img{
+    width:40px;height:40px;border-radius:4px;
+    background:var(--paper-dim);display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:#a89c84;font-family:'Anton',sans-serif;letter-spacing:0.5px;
+  }
+  .shirt-list .type-badge{
+    font-family:'Anton',sans-serif;font-size:11px;letter-spacing:1px;
+    background:var(--gold);color:var(--pitch-dark);
+    padding:2px 8px;border-radius:999px;white-space:nowrap;
+  }
+  .shirt-list .list-actions button{
+    font-family:'Anton',sans-serif;font-size:11px;letter-spacing:1px;
+    text-transform:uppercase;padding:5px 10px;border-radius:5px;
+    cursor:pointer;border:1.5px solid var(--line);background:var(--paper);color:var(--pitch);
+    white-space:nowrap;
+  }
+  .shirt-list .list-actions button.del{color:var(--red);border-color:#e6c9c2;}
+  .shirt-list .list-actions button:hover{border-color:var(--gold);}
+  .shirt-list .sub{font-size:11px;color:#7c7464;margin-top:2px;}
+
   .empty-state{
     text-align:center;
     padding:60px 20px;
@@ -523,7 +591,13 @@
       </div>
     </div>
 
-    <div class="results-count" id="results-count"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div class="results-count" id="results-count" style="margin-bottom:0;"></div>
+      <div class="view-toggle">
+        <button id="btn-grid-view" class="toggle-btn active" title="Grid view">&#9783;</button>
+        <button id="btn-list-view" class="toggle-btn" title="List view">&#9776;</button>
+      </div>
+    </div>
     <div class="grid" id="shirt-grid"></div>
   </section>
 
@@ -710,6 +784,24 @@ async function loadShirts(){
 }
 
 /* ============================================================
+   VIEW MODE TOGGLE
+   ============================================================ */
+let viewMode = 'grid';
+
+document.getElementById('btn-grid-view').addEventListener('click', ()=>{
+  viewMode = 'grid';
+  document.getElementById('btn-grid-view').classList.add('active');
+  document.getElementById('btn-list-view').classList.remove('active');
+  renderGrid();
+});
+document.getElementById('btn-list-view').addEventListener('click', ()=>{
+  viewMode = 'list';
+  document.getElementById('btn-list-view').classList.add('active');
+  document.getElementById('btn-grid-view').classList.remove('active');
+  renderGrid();
+});
+
+/* ============================================================
    COLLECTION / FILTERS
    ============================================================ */
 const filtClub = document.getElementById('filt-club');
@@ -749,6 +841,7 @@ function renderGrid(){
   countEl.textContent = `${filtered.length} shirt${filtered.length===1?'':'s'} shown out of ${allShirts.length} total`;
 
   if(filtered.length === 0){
+    grid.className = 'grid';
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
       <div class="num">0</div>
       <p>${allShirts.length===0 ? 'No shirts in your collection yet. Add your first one!' : 'No shirts match these filters.'}</p>
@@ -756,28 +849,76 @@ function renderGrid(){
     return;
   }
 
-  grid.innerHTML = filtered.map(s=>`
-    <div class="card">
-      <div class="badge">${s.type}</div>
-      <div class="photo">
-        ${s.image ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}">` : `<span class="placeholder">No photo</span>`}
-      </div>
-      <div class="info">
-        <h3>${escapeHtml(s.club)}</h3>
-        <div class="meta">
-          <b>${escapeHtml(s.season)}</b> · ${escapeHtml(s.brand)}<br>
-          ${escapeHtml(s.country)}, ${escapeHtml(s.continent)}<br>
-          Purchased: ${s.year}
-          ${s.player ? `<br><span style="color:var(--pitch);font-weight:600;">${escapeHtml(s.player)}</span>` : ''}
-          ${s.notes ? `<br><span style="font-style:italic;color:#7c7464;">${escapeHtml(s.notes)}</span>` : ''}
+  if(viewMode === 'list'){
+    grid.className = '';
+    grid.innerHTML = `<div class="shirt-list">
+      <table>
+        <thead>
+          <tr>
+            <th class="td-thumb"></th>
+            <th>#</th>
+            <th>Club</th>
+            <th>Season</th>
+            <th>Type</th>
+            <th>Country</th>
+            <th>Brand</th>
+            <th>Year</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(s=>`
+            <tr>
+              <td class="td-thumb">
+                ${s.image
+                  ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)}">`
+                  : `<div class="no-img">—</div>`}
+              </td>
+              <td style="color:#a89c84;">${s.id}</td>
+              <td>
+                <strong>${escapeHtml(s.club)}</strong>
+                ${s.player ? `<div class="sub">${escapeHtml(s.player)}</div>` : ''}
+                ${s.notes ? `<div class="sub" style="font-style:italic;">${escapeHtml(s.notes)}</div>` : ''}
+              </td>
+              <td>${escapeHtml(s.season)}</td>
+              <td><span class="type-badge">${escapeHtml(s.type)}</span></td>
+              <td>${escapeHtml(s.country)}</td>
+              <td>${escapeHtml(s.brand)}</td>
+              <td>${s.year}</td>
+              <td class="list-actions">
+                <button onclick="startEdit(${s.id})">Edit</button>
+                <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  } else {
+    grid.className = 'grid';
+    grid.innerHTML = filtered.map(s=>`
+      <div class="card">
+        <div class="badge">${s.type}</div>
+        <div class="photo">
+          ${s.image ? `<img src="images/${escapeHtml(s.image)}" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}">` : `<span class="placeholder">No photo</span>`}
         </div>
-        <div class="actions">
-          <button onclick="startEdit(${s.id})">Edit</button>
-          <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+        <div class="info">
+          <h3>${escapeHtml(s.club)}</h3>
+          <div class="meta">
+            <b>${escapeHtml(s.season)}</b> · ${escapeHtml(s.brand)}<br>
+            ${escapeHtml(s.country)}, ${escapeHtml(s.continent)}<br>
+            Purchased: ${s.year}
+            ${s.player ? `<br><span style="color:var(--pitch);font-weight:600;">${escapeHtml(s.player)}</span>` : ''}
+            ${s.notes ? `<br><span style="font-style:italic;color:#7c7464;">${escapeHtml(s.notes)}</span>` : ''}
+          </div>
+          <div class="actions">
+            <button onclick="startEdit(${s.id})">Edit</button>
+            <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 }
 
 function escapeHtml(str){
