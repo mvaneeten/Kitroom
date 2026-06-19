@@ -286,6 +286,8 @@
     background:var(--card-bg);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
+  }
+  .shirt-list-scroll{
     overflow-x:auto;
     -webkit-overflow-scrolling:touch;
   }
@@ -452,7 +454,10 @@
 <body>
 
 <header class="top">
-  <h1>The Kit <span>Room</span></h1>
+  <div style="display:flex;align-items:baseline;gap:12px;">
+    <h1>The Kit <span>Room</span></h1>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v1.3</span>
+  </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
     <button data-view="collection" class="active">Collection</button>
@@ -632,9 +637,6 @@
 
 </main>
 
-<footer style="text-align:center;padding:16px;font-size:12px;color:#a89c84;letter-spacing:0.5px;">
-  v1.3
-</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
@@ -856,7 +858,7 @@ function renderGrid(){
 
   if(viewMode === 'list'){
     grid.className = '';
-    grid.innerHTML = `<div class="shirt-list">
+    grid.innerHTML = `<div class="shirt-list"><div class="shirt-list-scroll">
       <table>
         <thead>
           <tr>
@@ -898,7 +900,7 @@ function renderGrid(){
           `).join('')}
         </tbody>
       </table>
-    </div>`;
+    </div></div>`;
   } else {
     grid.className = 'grid';
     grid.innerHTML = filtered.map(s=>`
