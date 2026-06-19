@@ -286,9 +286,10 @@
     background:var(--card-bg);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    overflow:hidden;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
   }
-  .shirt-list table{width:100%;border-collapse:collapse;}
+  .shirt-list table{width:100%;border-collapse:collapse;min-width:700px;}
   .shirt-list th{
     font-family:'Anton',sans-serif;
     font-size:11px;
