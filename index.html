@@ -655,8 +655,8 @@
 async function loadShirtsFromJSON(){
   const res = await fetch('shirts.json');
   const data = await res.json();
-  // ensure every record has a stable numeric id
-  data.forEach((s, i)=>{ if(!s.id) s.id = i + 1; });
+  // ensure every record has a stable id (numeric or string like "s1")
+  data.forEach((s, i)=>{ if(s.id === undefined || s.id === null) s.id = i + 1; });
   return data;
 }
 
@@ -843,6 +843,10 @@ function renderGrid(){
     return 0;
   });
 
+  const isSpecial = s => String(s.id).startsWith('s') || s.type === 'Other';
+  const regular  = filtered.filter(s => !isSpecial(s));
+  const specials = filtered.filter(s =>  isSpecial(s));
+
   countEl.textContent = `${filtered.length} shirt${filtered.length===1?'':'s'} shown out of ${allShirts.length} total`;
 
   if(filtered.length === 0){
@@ -854,9 +858,15 @@ function renderGrid(){
     return;
   }
 
+  grid.className = '';
+  grid.innerHTML = renderSection(regular) +
+    (specials.length ? `<h2 class="section-title" style="margin-top:32px;">Specials</h2>` + renderSection(specials) : '');
+}
+
+function renderSection(shirts){
+  if(shirts.length === 0) return '';
   if(viewMode === 'list'){
-    grid.className = '';
-    grid.innerHTML = `<div class="shirt-list"><div class="shirt-list-scroll">
+    return `<div class="shirt-list"><div class="shirt-list-scroll">
       <table>
         <thead>
           <tr>
@@ -872,7 +882,7 @@ function renderGrid(){
           </tr>
         </thead>
         <tbody>
-          ${filtered.map(s=>`
+          ${shirts.map(s=>`
             <tr>
               <td class="td-thumb">
                 <img src="images/${s.id}.jpg" alt="${escapeHtml(s.club)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -890,8 +900,8 @@ function renderGrid(){
               <td>${escapeHtml(s.brand)}</td>
               <td>${s.year}</td>
               <td class="list-actions">
-                <button onclick="startEdit(${s.id})">Edit</button>
-                <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+                <button onclick="startEdit('${s.id}')">Edit</button>
+                <button class="del" onclick="removeShirt('${s.id}')">Remove</button>
               </td>
             </tr>
           `).join('')}
@@ -899,8 +909,7 @@ function renderGrid(){
       </table>
     </div></div>`;
   } else {
-    grid.className = 'grid';
-    grid.innerHTML = filtered.map(s=>`
+    return `<div class="grid" style="margin-bottom:8px;">${shirts.map(s=>`
       <div class="card">
         <div class="badge">${s.type}</div>
         <div class="photo">
@@ -917,12 +926,12 @@ function renderGrid(){
             ${s.notes ? `<br><span style="font-style:italic;color:#7c7464;">${escapeHtml(s.notes)}</span>` : ''}
           </div>
           <div class="actions">
-            <button onclick="startEdit(${s.id})">Edit</button>
-            <button class="del" onclick="removeShirt(${s.id})">Remove</button>
+            <button onclick="startEdit('${s.id}')">Edit</button>
+            <button class="del" onclick="removeShirt('${s.id}')">Remove</button>
           </div>
         </div>
       </div>
-    `).join('');
+    `).join('')}</div>`;
   }
 }
 
