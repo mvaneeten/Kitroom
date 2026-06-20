@@ -1359,6 +1359,18 @@
     "player": null
   },
   {
+    "id": 114,
+    "club": "Ajax",
+    "season": "2016/2017",
+    "type": "Away",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": "Adidas",
+    "year": null,
+    "image": null,
+    "player": null
+  },
+  {
     "id": 115,
     "club": "Ajax",
     "season": "1997/1998",
