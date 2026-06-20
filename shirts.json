@@ -1758,7 +1758,7 @@
     "player": null
   },
   {
-    "id": 147,
+    "id": "s4",
     "club": "Ajax",
     "season": "2014/2015",
     "type": "Other",
@@ -1766,7 +1766,7 @@
     "country": "Netherlands",
     "brand": "Adidas",
     "year": 2025,
-    "image": null,
+    "image": "147",
     "player": null,
     "notes": "Special"
   },
