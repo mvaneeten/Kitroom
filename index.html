@@ -461,6 +461,7 @@
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
     <button data-view="collection" class="active">Collection</button>
+    <button data-view="clubs">Clubs</button>
     <button data-view="map">World map</button>
     <button data-view="add">Add a shirt</button>
   </nav>
@@ -621,6 +622,28 @@
     <div class="grid" id="shirt-grid"></div>
   </section>
 
+  <!-- CLUBS VIEW -->
+  <section id="view-clubs" class="view">
+    <h2 class="section-title">Clubs</h2>
+    <div class="shirt-list"><div class="shirt-list-scroll">
+      <table id="clubs-table">
+        <thead>
+          <tr>
+            <th>Club</th>
+            <th>Country</th>
+            <th style="text-align:center;">Total</th>
+            <th style="text-align:center;">Home</th>
+            <th style="text-align:center;">Away</th>
+            <th style="text-align:center;">Third</th>
+            <th style="text-align:center;">Fourth</th>
+            <th style="text-align:center;">Other</th>
+          </tr>
+        </thead>
+        <tbody id="clubs-table-body"></tbody>
+      </table>
+    </div></div>
+  </section>
+
   <!-- MAP VIEW -->
   <section id="view-map" class="view">
     <h2 class="section-title">Around the world</h2>
@@ -693,6 +716,7 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
     btn.classList.add('active');
     document.getElementById('view-'+btn.dataset.view).classList.add('active');
     if(btn.dataset.view === 'collection') renderGrid();
+    if(btn.dataset.view === 'clubs') renderClubs();
     if(btn.dataset.view === 'map') renderMap();
   });
 });
@@ -946,6 +970,35 @@ function renderSection(shirts){
 
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+   CLUBS
+   ============================================================ */
+function renderClubs(){
+  const types = ['Home','Away','Third','Fourth','Other'];
+
+  // aggregate per club
+  const map = {};
+  allShirts.forEach(s=>{
+    if(!map[s.club]) map[s.club] = {club:s.club, country:s.country, total:0, Home:0, Away:0, Third:0, Fourth:0, Other:0};
+    const row = map[s.club];
+    row.total++;
+    const t = types.includes(s.type) ? s.type : 'Other';
+    row[t]++;
+  });
+
+  const rows = Object.values(map).sort((a,b)=> a.club.localeCompare(b.club));
+
+  const tbody = document.getElementById('clubs-table-body');
+  tbody.innerHTML = rows.map(r=>`
+    <tr>
+      <td><strong>${escapeHtml(r.club)}</strong></td>
+      <td>${escapeHtml(r.country)}</td>
+      <td style="text-align:center;font-family:'Anton',sans-serif;color:var(--pitch);">${r.total}</td>
+      ${types.map(t=>`<td style="text-align:center;">${r[t] || '—'}</td>`).join('')}
+    </tr>
+  `).join('');
 }
 
 /* ============================================================
