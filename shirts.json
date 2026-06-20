@@ -2343,5 +2343,70 @@
     "image": null,
     "player": null,
     "notes": "Thuis CL"
+  },
+  {
+    "id": "s1",
+    "club": "Ajax",
+    "season": "1973",
+    "type": "Limited Edition",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": null,
+    "year": 2022,
+    "image": null,
+    "player": "14",
+    "notes": "Replica Europa Cup 1 Final 1973"
+  },
+  {
+    "id": "s2",
+    "club": "Ajax",
+    "season": "1970/1973",
+    "type": "Limited Edition",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": null,
+    "year": 2023,
+    "image": null,
+    "player": "14",
+    "notes": "Johan Cruijff limited 1366/1414"
+  },
+  {
+    "id": "s3",
+    "club": "Ajax",
+    "season": "1970/1973",
+    "type": "Originals",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": "Adidas",
+    "year": 2024,
+    "image": null,
+    "player": null,
+    "notes": null
+  },
+  {
+    "id": "s5",
+    "club": "Ajax",
+    "season": "1921/1972",
+    "type": "Baseball",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": "Adidas",
+    "year": 2026,
+    "image": null,
+    "player": "79",
+    "notes": null
+  },
+  {
+    "id": "s6",
+    "club": "Ajax",
+    "season": "1962/1963",
+    "type": "Limited Edition",
+    "continent": "Europe",
+    "country": "Netherlands",
+    "brand": null,
+    "year": 2026,
+    "image": null,
+    "player": "8",
+    "notes": "Sjaak Swart limited 808/888"
   }
 ]
