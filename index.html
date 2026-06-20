@@ -600,6 +600,12 @@
           <option value="year-desc">Year ↓</option>
         </select>
       </div>
+      <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--pitch);cursor:pointer;">
+          <input type="checkbox" id="filt-specials" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;">
+          Specials only
+        </label>
+      </div>
       <div class="clear-wrap">
         <button type="button" class="secondary" id="clear-filters">Clear filters</button>
       </div>
@@ -796,15 +802,17 @@ const filtBrand = document.getElementById('filt-brand');
 const filtYear = document.getElementById('filt-year');
 
 const sortBy = document.getElementById('sort-by');
+const filtSpecials = document.getElementById('filt-specials');
 
 [filtClub, filtSeason, filtType, filtContinent, filtCountry, filtBrand, filtYear, sortBy].forEach(el=>{
   el.addEventListener('input', renderGrid);
   el.addEventListener('change', renderGrid);
 });
+filtSpecials.addEventListener('change', renderGrid);
 
 document.getElementById('clear-filters').addEventListener('click', ()=>{
   filtClub.value=''; filtSeason.value=''; filtType.value=''; filtContinent.value='';
-  filtCountry.value=''; filtBrand.value=''; filtYear.value=''; sortBy.value='id-asc';
+  filtCountry.value=''; filtBrand.value=''; filtYear.value=''; sortBy.value='id-asc'; filtSpecials.checked=false;
   renderGrid();
 });
 
@@ -844,8 +852,9 @@ function renderGrid(){
   });
 
   const isSpecial = s => String(s.id).startsWith('s') || s.type === 'Other';
-  const regular  = filtered.filter(s => !isSpecial(s));
-  const specials = filtered.filter(s =>  isSpecial(s));
+  const showSpecialsOnly = filtSpecials.checked;
+  const regular  = showSpecialsOnly ? [] : filtered.filter(s => !isSpecial(s));
+  const specials = filtered.filter(s => isSpecial(s));
 
   countEl.textContent = `${filtered.length} shirt${filtered.length===1?'':'s'} shown out of ${allShirts.length} total`;
 
