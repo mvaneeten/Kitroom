@@ -501,7 +501,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.2</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.3</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -712,6 +712,10 @@
     <h2 class="section-title">Clubs</h2>
     <div class="filter-bar" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
       <div>
+        <label for="clubs-filt-country">Country</label>
+        <input type="text" id="clubs-filt-country" placeholder="Filter country…">
+      </div>
+      <div>
         <label for="clubs-sort">Sort by</label>
         <select id="clubs-sort">
           <option value="club-asc">Club A–Z</option>
@@ -721,6 +725,10 @@
           <option value="total-desc">Most shirts</option>
           <option value="total-asc">Fewest shirts</option>
         </select>
+      </div>
+      <div class="clear-wrap">
+        <button type="button" class="secondary" id="clubs-search-btn">Search</button>
+        <button type="button" class="secondary" id="clubs-clear-btn">Clear</button>
       </div>
     </div>
     <div class="shirt-list"><div class="shirt-list-scroll">
@@ -1048,7 +1056,8 @@ function renderSection(shirts){
     return `<div class="grid" style="margin-bottom:8px;">${shirts.map(s=>`
       <div class="card">
         <div class="badge">${s.type}</div>
-        <div class="photo">
+        <div class="photo" style="position:relative;">
+          <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;z-index:1;">#${s.id}</div>
           <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <span class="placeholder" style="display:none;">No photo</span>
         </div>
@@ -1096,7 +1105,8 @@ function renderByYear(){
 
   const renderCard = s => `
     <div class="year-card">
-      <div class="year-photo">
+      <div class="year-photo" style="position:relative;">
+        <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;z-index:1;">#${s.id}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
         <span class="placeholder" style="display:none;">No photo</span>
@@ -1149,7 +1159,8 @@ function renderAjax(){
   const dir = ajaxSort.value;
   const typeOrder = {'Home':0,'Away':1,'Third':2,'Fourth':3,'Other':4};
 
-  const ajaxShirts = allShirts.filter(s => s.club.toLowerCase() === 'ajax');
+  const ajaxHidden = new Set([115, 165, 127, 105]);
+  const ajaxShirts = allShirts.filter(s => s.club.toLowerCase() === 'ajax' && !ajaxHidden.has(s.id));
   const regular = ajaxShirts.filter(s => !isSpecial(s));
   const specials = ajaxShirts.filter(s =>  isSpecial(s));
 
@@ -1208,9 +1219,14 @@ function renderAjax(){
    ============================================================ */
 const clubsSort = document.getElementById('clubs-sort');
 clubsSort.addEventListener('change', renderClubs);
+const clubsFiltCountry = document.getElementById('clubs-filt-country');
+document.getElementById('clubs-search-btn').addEventListener('click', renderClubs);
+clubsFiltCountry.addEventListener('keydown', e=>{ if(e.key==='Enter') renderClubs(); });
+document.getElementById('clubs-clear-btn').addEventListener('click', ()=>{ clubsFiltCountry.value=''; renderClubs(); });
 
 function renderClubs(){
   const types = ['Home','Away','Third','Fourth','Other'];
+  const countryQ = clubsFiltCountry.value.toLowerCase();
 
   // aggregate per club
   const map = {};
@@ -1223,7 +1239,7 @@ function renderClubs(){
   });
 
   const [sortField, sortDir] = clubsSort.value.split('-');
-  const rows = Object.values(map).sort((a,b)=>{
+  const rows = Object.values(map).filter(r => !countryQ || r.country.toLowerCase().includes(countryQ)).sort((a,b)=>{
     const av = sortField === 'total' ? a.total : a[sortField].toLowerCase();
     const bv = sortField === 'total' ? b.total : b[sortField].toLowerCase();
     if(av < bv) return sortDir === 'asc' ? -1 : 1;
