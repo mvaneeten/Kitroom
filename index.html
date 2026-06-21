@@ -500,7 +500,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.0</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.1</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -654,6 +654,7 @@
         </label>
       </div>
       <div class="clear-wrap">
+        <button type="button" id="search-btn">Search</button>
         <button type="button" class="secondary" id="clear-filters">Clear filters</button>
       </div>
     </div>
@@ -926,11 +927,14 @@ const filtYear = document.getElementById('filt-year');
 const sortBy = document.getElementById('sort-by');
 const filtSpecials = document.getElementById('filt-specials');
 
-[filtClub, filtSeason, filtType, filtContinent, filtCountry, filtBrand, filtYear, sortBy].forEach(el=>{
-  el.addEventListener('input', renderGrid);
+[filtType, filtContinent, filtCountry, sortBy].forEach(el=>{
   el.addEventListener('change', renderGrid);
 });
 filtSpecials.addEventListener('change', renderGrid);
+[filtClub, filtSeason, filtBrand, filtYear].forEach(el=>{
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter') renderGrid(); });
+});
+document.getElementById('search-btn').addEventListener('click', renderGrid);
 
 document.getElementById('clear-filters').addEventListener('click', ()=>{
   filtClub.value=''; filtSeason.value=''; filtType.value=''; filtContinent.value='';
@@ -1168,7 +1172,7 @@ function renderAjax(){
   const renderCard = s => `
     <div class="year-card">
       <div class="year-photo" style="position:relative;">
-        <div class="badge" style="position:absolute;top:6px;left:6px;font-size:11px;padding:2px 8px;">${escapeHtml(s.type)}</div>
+        <div class="badge" style="position:absolute;top:6px;left:6px;font-size:11px;padding:2px 8px;background:#c0392b;color:#fff;font-weight:700;">${escapeHtml(s.type)}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
         <span class="placeholder" style="display:none;">No photo</span>
