@@ -501,7 +501,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.3</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.4</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -956,12 +956,12 @@ function renderGrid(){
   const countEl = document.getElementById('results-count');
 
   const filtered = allShirts.filter(s=>{
-    if(filtClub.value && !s.club.toLowerCase().includes(filtClub.value.toLowerCase())) return false;
-    if(filtSeason.value && !s.season.toLowerCase().includes(filtSeason.value.toLowerCase())) return false;
+    if(filtClub.value && !(s.club||'').toLowerCase().includes(filtClub.value.toLowerCase())) return false;
+    if(filtSeason.value && !(s.season||'').toLowerCase().includes(filtSeason.value.toLowerCase())) return false;
     if(filtType.value && s.type !== filtType.value) return false;
     if(filtContinent.value && s.continent !== filtContinent.value) return false;
     if(filtCountry.value && s.country !== filtCountry.value) return false;
-    if(filtBrand.value && !s.brand.toLowerCase().includes(filtBrand.value.toLowerCase())) return false;
+    if(filtBrand.value && !(s.brand||'').toLowerCase().includes(filtBrand.value.toLowerCase())) return false;
     if(filtYear.value && String(s.year) !== filtYear.value) return false;
     return true;
   });
