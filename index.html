@@ -648,6 +648,19 @@
   <!-- CLUBS VIEW -->
   <section id="view-clubs" class="view">
     <h2 class="section-title">Clubs</h2>
+    <div class="filter-bar" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+      <div>
+        <label for="clubs-sort">Sort by</label>
+        <select id="clubs-sort">
+          <option value="club-asc">Club A–Z</option>
+          <option value="club-desc">Club Z–A</option>
+          <option value="country-asc">Country A–Z</option>
+          <option value="country-desc">Country Z–A</option>
+          <option value="total-desc">Most shirts</option>
+          <option value="total-asc">Fewest shirts</option>
+        </select>
+      </div>
+    </div>
     <div class="shirt-list"><div class="shirt-list-scroll">
       <table id="clubs-table">
         <thead>
@@ -1091,6 +1104,9 @@ function renderAjax(){
 /* ============================================================
    CLUBS
    ============================================================ */
+const clubsSort = document.getElementById('clubs-sort');
+clubsSort.addEventListener('change', renderClubs);
+
 function renderClubs(){
   const types = ['Home','Away','Third','Fourth','Other'];
 
@@ -1104,7 +1120,14 @@ function renderClubs(){
     row[t]++;
   });
 
-  const rows = Object.values(map).sort((a,b)=> a.club.localeCompare(b.club));
+  const [sortField, sortDir] = clubsSort.value.split('-');
+  const rows = Object.values(map).sort((a,b)=>{
+    const av = sortField === 'total' ? a.total : a[sortField].toLowerCase();
+    const bv = sortField === 'total' ? b.total : b[sortField].toLowerCase();
+    if(av < bv) return sortDir === 'asc' ? -1 : 1;
+    if(av > bv) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
 
   const tbody = document.getElementById('clubs-table-body');
   tbody.innerHTML = rows.map(r=>`
