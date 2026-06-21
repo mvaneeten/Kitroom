@@ -500,7 +500,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v1.9</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.0</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -1128,60 +1128,53 @@ document.getElementById('ajax-clear').addEventListener('click', ()=>{
   renderAjax();
 });
 
+function expandSeason(season){
+  const m = season.match(/^(\d{4})\/(\d{4})$/);
+  if(!m) return [season];
+  const start = parseInt(m[1]), end = parseInt(m[2]);
+  if(end - start <= 1 || end - start > 10) return [season];
+  const out = [];
+  for(let y = start; y < end; y++) out.push(`${y}/${y+1}`);
+  return out;
+}
+
 function renderAjax(){
   const isSpecial = s => String(s.id).startsWith('s') || s.type === 'Other';
   const seasonFilter = ajaxFiltSeason.value.toLowerCase();
   const dir = ajaxSort.value;
   const typeOrder = {'Home':0,'Away':1,'Third':2,'Fourth':3,'Other':4};
 
-  const ajaxShirts = allShirts.filter(s =>
-    s.club.toLowerCase() === 'ajax' &&
-    (!seasonFilter || s.season.toLowerCase().includes(seasonFilter))
-  );
-
+  const ajaxShirts = allShirts.filter(s => s.club.toLowerCase() === 'ajax');
   const regular = ajaxShirts.filter(s => !isSpecial(s));
   const specials = ajaxShirts.filter(s =>  isSpecial(s));
 
-  // group regular by season
+  // expand multi-year seasons
   const seasonMap = {};
   regular.forEach(s => {
-    if(!seasonMap[s.season]) seasonMap[s.season] = [];
-    seasonMap[s.season].push(s);
+    expandSeason(s.season).forEach(expanded => {
+      if(seasonFilter && !expanded.toLowerCase().includes(seasonFilter)) return;
+      if(!seasonMap[expanded]) seasonMap[expanded] = [];
+      seasonMap[expanded].push(s);
+    });
   });
 
-  // sort seasons
   const seasons = Object.keys(seasonMap).sort((a, b) =>
     dir === 'asc' ? a.localeCompare(b) : b.localeCompare(a)
   );
-
-  // sort shirts within each season by type
   seasons.forEach(season => {
     seasonMap[season].sort((a, b) => (typeOrder[a.type]??9) - (typeOrder[b.type]??9));
   });
 
-  const renderRows = shirts => shirts.map(s => `
-    <tr>
-      <td class="td-thumb">
-        <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="no-img" style="display:none;">—</div>
-      </td>
-      <td style="color:#a89c84;">${s.id}</td>
-      <td><span class="type-badge">${escapeHtml(s.type)}</span></td>
-      <td>${escapeHtml(s.brand || '—')}</td>
-      <td>${s.year}</td>
-      <td>${s.player ? escapeHtml(s.player) : '—'}</td>
-      <td>${s.notes ? `<span style="font-style:italic;color:#7c7464;">${escapeHtml(s.notes)}</span>` : '—'}</td>
-      <td class="list-actions">
-        <button onclick="startEdit('${s.id}')">Edit</button>
-        <button class="del" onclick="removeShirt('${s.id}')">Remove</button>
-      </td>
-    </tr>
-  `).join('');
-
-  const thead = `<thead><tr>
-    <th class="td-thumb"></th>
-    <th>#</th><th>Type</th><th>Brand</th><th>Year</th><th>Player</th><th>Notes</th><th></th>
-  </tr></thead>`;
+  const renderCard = s => `
+    <div class="year-card">
+      <div class="year-photo" style="position:relative;">
+        <div class="badge" style="position:absolute;top:6px;left:6px;font-size:11px;padding:2px 8px;">${escapeHtml(s.type)}</div>
+        <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <span class="placeholder" style="display:none;">No photo</span>
+      </div>
+      ${s.player || s.notes ? `<div class="year-info"><span>${escapeHtml(s.player||'')}${s.player&&s.notes?' · ':''}${escapeHtml(s.notes||'')}</span></div>` : ''}
+    </div>`;
 
   let html = '';
 
@@ -1190,16 +1183,14 @@ function renderAjax(){
   } else {
     seasons.forEach(season => {
       html += `<h2 class="section-title" style="margin-top:24px;">${escapeHtml(season)}</h2>
-        <div class="shirt-list"><div class="shirt-list-scroll">
-          <table>${thead}<tbody>${renderRows(seasonMap[season])}</tbody></table>
-        </div></div>`;
+        <div class="year-grid">${seasonMap[season].map(renderCard).join('')}</div>`;
     });
-
     if(specials.length){
-      html += `<h2 class="section-title" style="margin-top:32px;">Specials</h2>
-        <div class="shirt-list"><div class="shirt-list-scroll">
-          <table>${thead}<tbody>${renderRows(specials)}</tbody></table>
-        </div></div>`;
+      const filteredSpecials = specials.filter(s => !seasonFilter || s.season.toLowerCase().includes(seasonFilter));
+      if(filteredSpecials.length){
+        html += `<h2 class="section-title" style="margin-top:32px;">Specials</h2>
+          <div class="year-grid">${filteredSpecials.map(renderCard).join('')}</div>`;
+      }
     }
   }
 
