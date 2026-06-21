@@ -654,7 +654,7 @@
         </label>
       </div>
       <div class="clear-wrap">
-        <button type="button" id="search-btn">Search</button>
+        <button type="button" class="secondary" id="search-btn">Search</button>
         <button type="button" class="secondary" id="clear-filters">Clear filters</button>
       </div>
     </div>
@@ -1173,6 +1173,7 @@ function renderAjax(){
     <div class="year-card">
       <div class="year-photo" style="position:relative;">
         <div class="badge" style="position:absolute;top:6px;left:6px;font-size:11px;padding:2px 8px;background:#c0392b;color:#fff;font-weight:700;">${escapeHtml(s.type)}</div>
+        <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;">#${s.id}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
         <span class="placeholder" style="display:none;">No photo</span>
