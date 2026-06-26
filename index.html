@@ -90,7 +90,7 @@
   .view.active{display:block;}
 
   /* ---------- Detail view ---------- */
-  #view-detail{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;padding:28px;}
+  #view-detail{display:none;position:fixed;inset:0;z-index:200;background:var(--paper);overflow-y:auto;padding:28px;}
   #view-detail.active{display:block;}
   .detail-back{display:inline-flex;align-items:center;gap:8px;font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--pitch);background:transparent;border:2px solid var(--line);border-radius:6px;padding:8px 18px;cursor:pointer;margin-bottom:24px;}
   .detail-back:hover{border-color:var(--pitch);}
@@ -519,7 +519,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.5</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.6</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -662,7 +662,7 @@
           <option value="season-asc">Season ↑</option>
           <option value="season-desc">Season ↓</option>
           <option value="year-asc">Year ↑</option>
-          <option value="year-desc">Year ↓</option>
+          <option value="year-desc" selected>Year ↓</option>
         </select>
       </div>
       <div style="display:flex;align-items:flex-end;padding-bottom:2px;">
@@ -987,7 +987,7 @@ document.getElementById('search-btn').addEventListener('click', renderGrid);
 
 document.getElementById('clear-filters').addEventListener('click', ()=>{
   filtClub.value=''; filtSeason.value=''; filtType.value=''; filtContinent.value='';
-  filtCountry.value=''; filtBrand.value=''; filtYear.value=''; sortBy.value='id-asc'; filtSpecials.checked=false;
+  filtCountry.value=''; filtBrand.value=''; filtYear.value=''; sortBy.value='year-desc'; filtSpecials.checked=false;
   renderGrid();
 });
 
@@ -1017,7 +1017,10 @@ function renderGrid(){
     let av, bv;
     if(sortField === 'id')          { av = Number(a.id);              bv = Number(b.id); }
     else if(sortField === 'club')   { av = a.club.toLowerCase();      bv = b.club.toLowerCase(); }
-    else if(sortField === 'year')   { av = a.year;                    bv = b.year; }
+    else if(sortField === 'year'){
+      if(a.year !== b.year){ av = a.year; bv = b.year; }
+      else return sortDir === 'asc' ? Number(a.id) - Number(b.id) : Number(b.id) - Number(a.id);
+    }
     else { // season
       av = a.season; bv = b.season;
       if(av === bv){
