@@ -89,6 +89,24 @@
   .view{display:none;}
   .view.active{display:block;}
 
+  /* ---------- Detail view ---------- */
+  #view-detail{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;padding:28px;}
+  #view-detail.active{display:block;}
+  .detail-back{display:inline-flex;align-items:center;gap:8px;font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--pitch);background:transparent;border:2px solid var(--line);border-radius:6px;padding:8px 18px;cursor:pointer;margin-bottom:24px;}
+  .detail-back:hover{border-color:var(--pitch);}
+  .detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:900px;margin:0 auto;}
+  @media(max-width:600px){.detail-layout{grid-template-columns:1fr;}}
+  .detail-img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow);aspect-ratio:1;object-fit:contain;background:var(--card-bg);}
+  .detail-img-placeholder{width:100%;aspect-ratio:1;border-radius:var(--radius);background:var(--card-bg);display:flex;align-items:center;justify-content:center;color:#a89c84;font-size:14px;}
+  .detail-info{display:flex;flex-direction:column;gap:16px;}
+  .detail-club{font-family:'Anton',sans-serif;font-size:28px;font-weight:400;text-transform:uppercase;letter-spacing:2px;color:var(--pitch);line-height:1.1;}
+  .detail-season{font-size:18px;color:#7c7464;font-weight:600;margin-top:4px;}
+  .detail-badge{display:inline-block;background:#c0392b;color:#fff;font-family:'Anton',sans-serif;font-size:13px;padding:3px 12px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;}
+  .detail-table{width:100%;border-collapse:collapse;margin-top:8px;}
+  .detail-table td{padding:8px 4px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top;}
+  .detail-table td:first-child{color:#a89c84;font-weight:600;text-transform:uppercase;font-size:12px;letter-spacing:1px;width:40%;white-space:nowrap;}
+  .detail-nr{font-size:13px;opacity:0.5;letter-spacing:1px;margin-bottom:4px;}
+
   h2.section-title{
     font-family:'Anton', sans-serif;
     font-weight:400;
@@ -501,7 +519,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.4</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v2.5</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -510,7 +528,6 @@
     <button data-view="byyear">By year</button>
     <button data-view="clubs">Clubs</button>
     <button data-view="map">World map</button>
-    <button data-view="add">Add a shirt</button>
   </nav>
 </header>
 
@@ -780,6 +797,29 @@
 
 </main>
 
+<!-- DETAIL VIEW (full-screen overlay) -->
+<div id="view-detail">
+  <div style="max-width:900px;margin:0 auto;">
+    <button class="detail-back" id="detail-back-btn">&#8592; Back</button>
+    <div class="detail-layout">
+      <div>
+        <img id="detail-img" class="detail-img" src="" alt="">
+        <div id="detail-img-placeholder" class="detail-img-placeholder" style="display:none;">No photo</div>
+      </div>
+      <div class="detail-info">
+        <div>
+          <div class="detail-nr" id="detail-nr"></div>
+          <div class="detail-club" id="detail-club"></div>
+          <div class="detail-season" id="detail-season"></div>
+        </div>
+        <div><span class="detail-badge" id="detail-type"></span></div>
+        <table class="detail-table" id="detail-table"></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
@@ -966,13 +1006,18 @@ function renderGrid(){
     return true;
   });
 
+  const isSpecial = s => String(s.id).startsWith('s') || s.type === 'Other';
+  const showSpecialsOnly = filtSpecials.checked;
+  const regular  = showSpecialsOnly ? [] : filtered.filter(s => !isSpecial(s));
+  const specials = filtered.filter(s => isSpecial(s));
+
   const [sortField, sortDir] = sortBy.value.split('-');
   const typeOrder = {'Home':0,'Away':1,'Third':2,'Fourth':3,'Other':4};
-  filtered.sort((a, b) => {
+  const sortFn = (a, b) => {
     let av, bv;
-    if(sortField === 'id')     { av = a.id;                  bv = b.id; }
-    else if(sortField === 'club')   { av = a.club.toLowerCase();   bv = b.club.toLowerCase(); }
-    else if(sortField === 'year')   { av = a.year;                 bv = b.year; }
+    if(sortField === 'id')          { av = Number(a.id);              bv = Number(b.id); }
+    else if(sortField === 'club')   { av = a.club.toLowerCase();      bv = b.club.toLowerCase(); }
+    else if(sortField === 'year')   { av = a.year;                    bv = b.year; }
     else { // season
       av = a.season; bv = b.season;
       if(av === bv){
@@ -984,12 +1029,9 @@ function renderGrid(){
     if(av < bv) return sortDir === 'asc' ? -1 : 1;
     if(av > bv) return sortDir === 'asc' ? 1 : -1;
     return 0;
-  });
-
-  const isSpecial = s => String(s.id).startsWith('s') || s.type === 'Other';
-  const showSpecialsOnly = filtSpecials.checked;
-  const regular  = showSpecialsOnly ? [] : filtered.filter(s => !isSpecial(s));
-  const specials = filtered.filter(s => isSpecial(s));
+  };
+  regular.sort(sortFn);
+  specials.sort(sortFn);
 
   countEl.textContent = `${filtered.length} shirt${filtered.length===1?'':'s'} shown out of ${allShirts.length} total`;
 
@@ -1056,7 +1098,7 @@ function renderSection(shirts){
     return `<div class="grid" style="margin-bottom:8px;">${shirts.map(s=>`
       <div class="card">
         <div class="badge">${s.type}</div>
-        <div class="photo" style="position:relative;">
+        <div class="photo" style="position:relative;cursor:pointer;" onclick="openDetail('${s.id}')">
           <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;z-index:1;">#${s.id}</div>
           <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
           <span class="placeholder" style="display:none;">No photo</span>
@@ -1079,6 +1121,57 @@ function renderSection(shirts){
     `).join('')}</div>`;
   }
 }
+
+/* ============================================================
+   DETAIL VIEW
+   ============================================================ */
+let detailFromView = 'collection';
+
+function openDetail(id){
+  const s = allShirts.find(s => String(s.id) === String(id));
+  if(!s) return;
+
+  // remember which tab we came from
+  const activeBtn = document.querySelector('nav.tabs button.active');
+  if(activeBtn) detailFromView = activeBtn.dataset.view;
+
+  const img = document.getElementById('detail-img');
+  const placeholder = document.getElementById('detail-img-placeholder');
+  img.src = `images/${s.image || s.id}.jpg`;
+  img.style.display = 'block';
+  placeholder.style.display = 'none';
+  img.onerror = () => { img.style.display='none'; placeholder.style.display='flex'; };
+
+  document.getElementById('detail-nr').textContent = `#${s.id}`;
+  document.getElementById('detail-club').textContent = s.club;
+  document.getElementById('detail-season').textContent = s.season;
+  document.getElementById('detail-type').textContent = s.type;
+
+  const rows = [
+    ['Brand',     s.brand],
+    ['Country',   s.country],
+    ['Continent', s.continent],
+    ['Year',      s.year],
+    s.player ? ['Player', s.player] : null,
+    s.notes  ? ['Notes',  s.notes]  : null,
+  ].filter(Boolean);
+
+  document.getElementById('detail-table').innerHTML = rows.map(([label, val]) =>
+    `<tr><td>${label}</td><td>${escapeHtml(String(val))}</td></tr>`
+  ).join('');
+
+  document.getElementById('view-detail').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function closeDetail(){
+  document.getElementById('view-detail').classList.remove('active');
+  // re-activate the tab we came from
+  const btn = document.querySelector(`nav.tabs button[data-view="${detailFromView}"]`);
+  if(btn) btn.click();
+}
+
+document.getElementById('detail-back-btn').addEventListener('click', closeDetail);
 
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1104,7 +1197,7 @@ function renderByYear(){
   const years = Object.keys(yearMap).sort((a,b) => dir === 'asc' ? a - b : b - a);
 
   const renderCard = s => `
-    <div class="year-card">
+    <div class="year-card" style="cursor:pointer;" onclick="openDetail('${s.id}')">
       <div class="year-photo" style="position:relative;">
         <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;z-index:1;">#${s.id}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
@@ -1182,7 +1275,7 @@ function renderAjax(){
   });
 
   const renderCard = s => `
-    <div class="year-card">
+    <div class="year-card" style="cursor:pointer;" onclick="openDetail('${s.id}')">
       <div class="year-photo" style="position:relative;">
         <div class="badge" style="position:absolute;top:6px;left:6px;font-size:11px;padding:2px 8px;background:#c0392b;color:#fff;font-weight:700;">${escapeHtml(s.type)}</div>
         <div style="position:absolute;bottom:6px;left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:2px 7px;border-radius:4px;">#${s.id}</div>
