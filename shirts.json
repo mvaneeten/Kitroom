@@ -63,10 +63,10 @@
         "continent":  "Europe",
         "country":  "Spain",
         "brand":  "Kelme",
-        "year":  1995,
+        "year":  1997,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Calella 1997",
         "story":  null
     },
     {
@@ -500,7 +500,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "South Africa 2023",
         "story":  null
     },
     {
@@ -514,7 +514,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "South Africa 2023",
         "story":  null
     },
     {
@@ -528,7 +528,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "South Africa 2023",
         "story":  null
     },
     {
@@ -542,7 +542,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "South Africa 2023",
         "story":  null
     },
     {
@@ -570,7 +570,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Lisboa 2023",
         "story":  null
     },
     {
@@ -584,7 +584,7 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Lisboa 2023",
         "story":  null
     },
     {
@@ -837,7 +837,7 @@
         "image":  null,
         "player":  null,
         "notes":  "Replica",
-        "trip":  null,
+        "trip":  "Mallorca 2024",
         "story":  null
     },
     {
@@ -865,7 +865,7 @@
         "year":  2024,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Mallorca 2024",
         "story":  null
     },
     {
@@ -921,7 +921,7 @@
         "year":  2024,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Thailand, Malaysia and Singapore 2024",
         "story":  null
     },
     {
@@ -935,7 +935,7 @@
         "year":  2024,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Thailand, Malaysia and Singapore 2024",
         "story":  null
     },
     {
@@ -949,7 +949,7 @@
         "year":  2024,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Thailand, Malaysia and Singapore 2024",
         "story":  null
     },
     {
@@ -964,7 +964,7 @@
         "image":  null,
         "player":  null,
         "notes":  "Replica",
-        "trip":  null,
+        "trip":  "Thailand, Malaysia and Singapore 2024",
         "story":  null
     },
     {
@@ -1441,7 +1441,7 @@
         "year":  2025,
         "image":  null,
         "player":  null,
-        "trip":  "London 2025",
+        "trip":  "London May 2025",
         "story":  null
     },
     {
@@ -2160,7 +2160,7 @@
         "year":  2025,
         "image":  null,
         "player":  null,
-        "trip":  "London 2025",
+        "trip":  "London October 2025",
         "story":  null
     },
     {
@@ -2174,7 +2174,7 @@
         "year":  2025,
         "image":  null,
         "player":  null,
-        "trip":  "London 2025",
+        "trip":  "London October 2025",
         "story":  null
     },
     {
@@ -2602,7 +2602,7 @@
         "year":  2026,
         "image":  null,
         "player":  null,
-        "trip":  null,
+        "trip":  "Rhodos 2026",
         "story":  null
     },
     {
