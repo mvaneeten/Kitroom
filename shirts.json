@@ -11,7 +11,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  2,
@@ -25,7 +27,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  3,
@@ -39,7 +43,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  4,
@@ -53,7 +59,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  5,
@@ -67,7 +75,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Calella 1997",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  6,
@@ -81,7 +91,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  7,
@@ -95,7 +107,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  8,
@@ -109,7 +123,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  9,
@@ -123,7 +139,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  10,
@@ -137,7 +155,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  11,
@@ -151,7 +171,9 @@
         "image":  null,
         "player":  "6 - Martijn",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  12,
@@ -165,7 +187,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  13,
@@ -179,7 +203,9 @@
         "image":  null,
         "player":  "12 - Rodgers",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  14,
@@ -193,7 +219,9 @@
         "image":  null,
         "player":  "34 - Nouri",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  15,
@@ -207,7 +235,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London 2017",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  16,
@@ -221,7 +251,9 @@
         "image":  null,
         "player":  "30 - Gurley II",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  17,
@@ -235,7 +267,9 @@
         "image":  null,
         "player":  "12 - Rodgers",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  18,
@@ -249,7 +283,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  19,
@@ -263,7 +299,9 @@
         "image":  null,
         "player":  "31 - Tagliafico",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  20,
@@ -277,7 +315,9 @@
         "image":  null,
         "player":  "10 - Tadic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  21,
@@ -291,7 +331,9 @@
         "image":  null,
         "player":  "17",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  22,
@@ -305,7 +347,9 @@
         "image":  null,
         "player":  "14 - van Eeten",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  23,
@@ -319,7 +363,9 @@
         "image":  null,
         "player":  "11 - Antony",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  24,
@@ -333,7 +379,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  25,
@@ -347,7 +395,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  26,
@@ -361,7 +411,9 @@
         "image":  null,
         "player":  "4 - Alvarez",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  27,
@@ -375,7 +427,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  28,
@@ -389,7 +443,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  29,
@@ -402,8 +458,10 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
-        "story":  null
+        "trip":  "Peter Brazilie 2023",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  30,
@@ -417,7 +475,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  31,
@@ -431,7 +491,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  32,
@@ -444,8 +506,10 @@
         "year":  2023,
         "image":  null,
         "player":  null,
-        "trip":  null,
-        "story":  null
+        "trip":  "Marloes Napels 2023",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  33,
@@ -459,7 +523,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  34,
@@ -472,8 +538,10 @@
         "year":  2023,
         "image":  null,
         "player":  "8",
-        "trip":  null,
-        "story":  null
+        "trip":  "Noord Macedonië 2023",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  35,
@@ -486,8 +554,10 @@
         "year":  2023,
         "image":  null,
         "player":  "6 - Tafa",
-        "trip":  null,
-        "story":  null
+        "trip":  "Noord Macedonië 2023",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  36,
@@ -501,7 +571,9 @@
         "image":  null,
         "player":  null,
         "trip":  "South Africa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  37,
@@ -515,7 +587,9 @@
         "image":  null,
         "player":  null,
         "trip":  "South Africa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  38,
@@ -529,7 +603,9 @@
         "image":  null,
         "player":  null,
         "trip":  "South Africa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  39,
@@ -543,7 +619,9 @@
         "image":  null,
         "player":  null,
         "trip":  "South Africa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  40,
@@ -557,7 +635,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  41,
@@ -571,7 +651,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Lisboa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  42,
@@ -585,7 +667,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Lisboa 2023",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  43,
@@ -599,7 +683,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  44,
@@ -613,7 +699,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  45,
@@ -627,7 +715,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  46,
@@ -641,7 +731,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  47,
@@ -655,7 +747,9 @@
         "image":  null,
         "player":  "9 - Brobbey",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  48,
@@ -669,7 +763,9 @@
         "image":  null,
         "player":  "10 - Akpom",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  49,
@@ -682,8 +778,10 @@
         "year":  2023,
         "image":  null,
         "player":  "9 - SuÃ¡rez",
-        "trip":  null,
-        "story":  null
+        "trip":  "Peter Brazilie 2023",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  50,
@@ -697,7 +795,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  51,
@@ -711,7 +811,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  52,
@@ -725,7 +827,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  53,
@@ -739,7 +843,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  54,
@@ -753,7 +859,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  55,
@@ -767,7 +875,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  56,
@@ -781,7 +891,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  57,
@@ -795,7 +907,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  58,
@@ -809,7 +923,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  59,
@@ -823,7 +939,9 @@
         "image":  null,
         "player":  "39 - Antony",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  60,
@@ -838,7 +956,9 @@
         "player":  null,
         "notes":  "Replica",
         "trip":  "Mallorca 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  61,
@@ -852,7 +972,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  62,
@@ -866,7 +988,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Mallorca 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  63,
@@ -880,7 +1004,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  64,
@@ -894,7 +1020,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  65,
@@ -908,7 +1036,9 @@
         "image":  null,
         "player":  "6 - Henderson",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  66,
@@ -922,7 +1052,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Thailand, Malaysia and Singapore 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  67,
@@ -936,7 +1068,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Thailand, Malaysia and Singapore 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  68,
@@ -950,7 +1084,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Thailand, Malaysia and Singapore 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  69,
@@ -965,7 +1101,9 @@
         "player":  null,
         "notes":  "Replica",
         "trip":  "Thailand, Malaysia and Singapore 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  70,
@@ -979,7 +1117,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  71,
@@ -993,7 +1133,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  72,
@@ -1007,7 +1149,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  73,
@@ -1021,7 +1165,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  74,
@@ -1035,7 +1181,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London 2024",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  75,
@@ -1048,8 +1196,10 @@
         "year":  2024,
         "image":  null,
         "player":  null,
-        "trip":  null,
-        "story":  null
+        "trip":  "Marloes Malta 2024",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  76,
@@ -1063,7 +1213,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  77,
@@ -1077,7 +1229,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  78,
@@ -1091,7 +1245,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  79,
@@ -1105,7 +1261,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  80,
@@ -1119,7 +1277,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  81,
@@ -1133,7 +1293,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  82,
@@ -1147,7 +1309,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  83,
@@ -1161,7 +1325,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  84,
@@ -1174,8 +1340,10 @@
         "year":  2025,
         "image":  null,
         "player":  null,
-        "trip":  null,
-        "story":  null
+        "trip":  "Peter Brazilie 2025",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  85,
@@ -1189,7 +1357,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  86,
@@ -1203,7 +1373,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  87,
@@ -1217,7 +1389,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  88,
@@ -1231,7 +1405,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  89,
@@ -1245,7 +1421,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  90,
@@ -1259,7 +1437,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  91,
@@ -1273,7 +1453,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  92,
@@ -1288,7 +1470,9 @@
         "player":  null,
         "notes":  "125e Jubileum",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  93,
@@ -1302,7 +1486,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  94,
@@ -1316,7 +1502,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  95,
@@ -1330,7 +1518,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  96,
@@ -1344,7 +1534,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  97,
@@ -1358,7 +1550,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  98,
@@ -1372,7 +1566,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  99,
@@ -1386,7 +1582,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  100,
@@ -1400,7 +1598,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  101,
@@ -1414,7 +1614,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  102,
@@ -1428,7 +1630,9 @@
         "image":  null,
         "player":  "4 - F. de Boer",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  103,
@@ -1442,7 +1646,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London May 2025",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  104,
@@ -1456,7 +1662,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  105,
@@ -1470,7 +1678,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  106,
@@ -1484,7 +1694,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  107,
@@ -1498,7 +1710,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  108,
@@ -1512,7 +1726,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  109,
@@ -1526,7 +1742,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  110,
@@ -1540,7 +1758,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  111,
@@ -1554,7 +1774,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  112,
@@ -1568,7 +1790,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  113,
@@ -1582,7 +1806,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  114,
@@ -1596,7 +1822,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  115,
@@ -1611,7 +1839,9 @@
         "player":  null,
         "notes":  "Gesigneerd door Musampa",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  116,
@@ -1625,7 +1855,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  117,
@@ -1639,7 +1871,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  118,
@@ -1653,7 +1887,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  119,
@@ -1667,7 +1903,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  120,
@@ -1681,7 +1919,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  121,
@@ -1695,7 +1935,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  122,
@@ -1710,7 +1952,9 @@
         "player":  null,
         "notes":  "Player issued",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  123,
@@ -1724,7 +1968,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  124,
@@ -1738,7 +1984,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  125,
@@ -1752,7 +2000,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  126,
@@ -1766,7 +2016,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  127,
@@ -1780,7 +2032,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  128,
@@ -1794,7 +2048,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  129,
@@ -1809,7 +2065,9 @@
         "player":  null,
         "notes":  "Player issued",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  130,
@@ -1823,7 +2081,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  131,
@@ -1837,7 +2097,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  132,
@@ -1851,7 +2113,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  133,
@@ -1865,7 +2129,9 @@
         "image":  null,
         "player":  "43 - van der Vaart",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  134,
@@ -1879,7 +2145,9 @@
         "image":  null,
         "player":  "18 - Sneijder",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  135,
@@ -1893,7 +2161,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  136,
@@ -1907,7 +2177,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  137,
@@ -1921,7 +2193,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Norway 2025",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  138,
@@ -1935,7 +2209,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  139,
@@ -1949,7 +2225,9 @@
         "image":  null,
         "player":  "18 - Sneijder",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  140,
@@ -1963,7 +2241,9 @@
         "image":  null,
         "player":  "10 - Litmanen",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  141,
@@ -1977,7 +2257,9 @@
         "image":  null,
         "player":  "18 - Klaassen",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  142,
@@ -1991,7 +2273,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  143,
@@ -2005,7 +2289,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  144,
@@ -2019,7 +2305,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  145,
@@ -2033,7 +2321,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  146,
@@ -2047,7 +2337,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  "s4",
@@ -2062,7 +2354,9 @@
         "player":  null,
         "notes":  "Special",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  148,
@@ -2076,7 +2370,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  149,
@@ -2090,7 +2386,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  150,
@@ -2104,7 +2402,9 @@
         "image":  null,
         "player":  "19 - Rosenberg",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  151,
@@ -2118,8 +2418,10 @@
         "image":  null,
         "player":  null,
         "notes":  "Official Retro",
-        "trip":  null,
-        "story":  null
+        "trip":  "Jeroen Schotland 2025",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  152,
@@ -2133,7 +2435,9 @@
         "image":  null,
         "player":  "9 - Zlatan",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  153,
@@ -2147,7 +2451,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  154,
@@ -2161,7 +2467,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London October 2025",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  155,
@@ -2175,7 +2483,9 @@
         "image":  null,
         "player":  null,
         "trip":  "London October 2025",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  156,
@@ -2188,8 +2498,10 @@
         "year":  2025,
         "image":  null,
         "player":  null,
-        "trip":  null,
-        "story":  null
+        "trip":  "Marloes Valencia 2025",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  true
     },
     {
         "id":  157,
@@ -2203,7 +2515,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  158,
@@ -2217,7 +2531,9 @@
         "image":  null,
         "player":  "34 - Nouri",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  159,
@@ -2231,7 +2547,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  160,
@@ -2245,7 +2563,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  161,
@@ -2259,7 +2579,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  162,
@@ -2273,7 +2595,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  163,
@@ -2287,7 +2611,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  164,
@@ -2301,7 +2627,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  165,
@@ -2315,7 +2643,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  166,
@@ -2330,7 +2660,9 @@
         "player":  null,
         "notes":  "De Meer",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  167,
@@ -2344,7 +2676,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  168,
@@ -2358,7 +2692,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  169,
@@ -2373,7 +2709,9 @@
         "player":  null,
         "notes":  "Authentic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  170,
@@ -2387,7 +2725,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  171,
@@ -2402,7 +2742,9 @@
         "player":  null,
         "notes":  "Jubileum",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  172,
@@ -2416,7 +2758,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  173,
@@ -2430,7 +2774,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  174,
@@ -2444,7 +2790,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  175,
@@ -2459,7 +2807,9 @@
         "player":  null,
         "notes":  "Authentic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  176,
@@ -2473,7 +2823,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  177,
@@ -2488,7 +2840,9 @@
         "player":  null,
         "notes":  "Authentic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  178,
@@ -2502,7 +2856,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  179,
@@ -2517,7 +2873,9 @@
         "player":  null,
         "notes":  "Authentic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  180,
@@ -2531,7 +2889,9 @@
         "image":  null,
         "player":  "9 - Ibrahimovic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  181,
@@ -2545,7 +2905,9 @@
         "image":  null,
         "player":  "16 - SuÃ¡rez",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  182,
@@ -2559,7 +2921,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  183,
@@ -2574,7 +2938,9 @@
         "player":  null,
         "notes":  "Authentic",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  184,
@@ -2589,7 +2955,9 @@
         "player":  null,
         "notes":  "Replica",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  185,
@@ -2603,7 +2971,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Rhodos 2026",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  186,
@@ -2617,7 +2987,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  187,
@@ -2631,7 +3003,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  188,
@@ -2645,7 +3019,9 @@
         "image":  null,
         "player":  "4 - Virgil",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  189,
@@ -2659,7 +3035,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  190,
@@ -2673,7 +3051,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  191,
@@ -2687,7 +3067,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  192,
@@ -2701,7 +3083,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  193,
@@ -2715,7 +3099,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  194,
@@ -2730,7 +3116,9 @@
         "player":  null,
         "notes":  "Thuis CL",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  195,
@@ -2744,7 +3132,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  196,
@@ -2758,7 +3148,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  197,
@@ -2772,7 +3164,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Indonesia 2026",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  198,
@@ -2786,7 +3180,9 @@
         "image":  null,
         "player":  null,
         "trip":  "Indonesia 2026",
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  199,
@@ -2800,7 +3196,9 @@
         "image":  null,
         "player":  "11 - Godts",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  200,
@@ -2814,7 +3212,9 @@
         "image":  null,
         "player":  "17 - Blind",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  201,
@@ -2828,11 +3228,13 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  202,
-        "club":  "Athletic Club de Bilbao",
+        "club":  "Athletic Club Bilbao",
         "season":  "2024/2025",
         "type":  "Fourth",
         "continent":  "Europe",
@@ -2842,7 +3244,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Mystery United",
+        "isSouvenir":  false
     },
     {
         "id":  203,
@@ -2856,7 +3260,9 @@
         "image":  null,
         "player":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  "s1",
@@ -2871,7 +3277,9 @@
         "player":  "14",
         "notes":  "Replica Europa Cup 1 Final 1973",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
     },
     {
         "id":  "s2",
@@ -2886,7 +3294,9 @@
         "player":  "14",
         "notes":  "Johan Cruijff limited 1366/1414",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  "s3",
@@ -2901,7 +3311,9 @@
         "player":  null,
         "notes":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  "s5",
@@ -2916,7 +3328,9 @@
         "player":  "79",
         "notes":  null,
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     },
     {
         "id":  "s6",
@@ -2931,6 +3345,8 @@
         "player":  "8",
         "notes":  "Sjaak Swart limited 808/888",
         "trip":  null,
-        "story":  null
+        "story":  null,
+        "store":  "Ajax Fanshop",
+        "isSouvenir":  false
     }
 ]

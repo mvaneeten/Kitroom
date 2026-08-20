@@ -520,7 +520,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v3.2</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v3.3</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -649,6 +649,10 @@
       <div>
         <label for="filt-brand">Brand</label>
         <input type="text" id="filt-brand" placeholder="Search brand…">
+      </div>
+      <div>
+        <label for="filt-store">Store</label>
+        <input type="text" id="filt-store" placeholder="Search store…">
       </div>
       <div>
         <label for="filt-year">Year</label>
@@ -980,6 +984,7 @@ const filtType = document.getElementById('filt-type');
 const filtContinent = document.getElementById('filt-continent');
 const filtCountry = document.getElementById('filt-country');
 const filtBrand = document.getElementById('filt-brand');
+const filtStore = document.getElementById('filt-store');
 const filtYear = document.getElementById('filt-year');
 
 const sortBy = document.getElementById('sort-by');
@@ -989,14 +994,14 @@ const filtSpecials = document.getElementById('filt-specials');
   el.addEventListener('change', renderGrid);
 });
 filtSpecials.addEventListener('change', renderGrid);
-[filtClub, filtSeason, filtBrand, filtYear].forEach(el=>{
+[filtClub, filtSeason, filtBrand, filtStore, filtYear].forEach(el=>{
   el.addEventListener('keydown', e=>{ if(e.key==='Enter') renderGrid(); });
 });
 document.getElementById('search-btn').addEventListener('click', renderGrid);
 
 document.getElementById('clear-filters').addEventListener('click', ()=>{
   filtClub.value=''; filtSeason.value=''; filtType.value=''; filtContinent.value='';
-  filtCountry.value=''; filtBrand.value=''; filtYear.value=''; sortBy.value='year-desc'; filtSpecials.checked=false;
+  filtCountry.value=''; filtBrand.value=''; filtStore.value=''; filtYear.value=''; sortBy.value='year-desc'; filtSpecials.checked=false;
   renderGrid();
 });
 
@@ -1011,6 +1016,7 @@ function renderGrid(){
     if(filtContinent.value && s.continent !== filtContinent.value) return false;
     if(filtCountry.value && s.country !== filtCountry.value) return false;
     if(filtBrand.value && !(s.brand||'').toLowerCase().includes(filtBrand.value.toLowerCase())) return false;
+    if(filtStore.value && !(s.store||'').toLowerCase().includes(filtStore.value.toLowerCase())) return false;
     if(filtYear.value && String(s.year) !== filtYear.value) return false;
     return true;
   });
@@ -1162,7 +1168,8 @@ function openDetail(id){
     ['Year',      s.year],
     s.player ? ['Player',           s.player] : null,
     s.notes  ? ['Notes',            s.notes]  : null,
-    s.trip   ? ['Bought on trip',   s.trip]   : null,
+    s.store  ? ['Store',            s.store]  : null,
+    s.isSouvenir ? ['Souvenir from', s.trip]   : (s.trip ? ['Bought on trip', s.trip] : null),
     s.story  ? ['Story of purchase',s.story]  : null,
   ].filter(Boolean);
 
@@ -1332,21 +1339,7 @@ document.getElementById('clubs-clear-btn').addEventListener('click', ()=>{ clubs
    TRAVEL VIEW
    ============================================================ */
 function renderTravel(){
-  const travelShirts = allShirts.filter(s => s.trip);
-
   const content = document.getElementById('travel-content');
-
-  if(travelShirts.length === 0){
-    content.innerHTML = `<div class="empty-state"><div class="num">0</div><p>No travel shirts yet. Add a trip to a shirt to see it here.</p></div>`;
-    return;
-  }
-
-  // group by trip
-  const tripMap = {};
-  travelShirts.forEach(s => {
-    if(!tripMap[s.trip]) tripMap[s.trip] = [];
-    tripMap[s.trip].push(s);
-  });
 
   const renderCard = s => `
     <div class="year-card" style="cursor:pointer;" onclick="openDetail('${s.id}')">
@@ -1362,10 +1355,44 @@ function renderTravel(){
       </div>
     </div>`;
 
-  content.innerHTML = Object.keys(tripMap).map(trip => `
-    <h2 class="section-title" style="margin-top:24px;">${escapeHtml(trip)} <span style="font-size:14px;font-family:'Work Sans',sans-serif;font-weight:400;color:#7c7464;">(${tripMap[trip].length} shirt${tripMap[trip].length===1?'':'s'})</span></h2>
-    <div class="year-grid">${tripMap[trip].map(renderCard).join('')}</div>
-  `).join('');
+  // --- My trips ---
+  const travelShirts = allShirts.filter(s => s.trip && !s.isSouvenir);
+  const tripMap = {};
+  travelShirts.forEach(s => {
+    if(!tripMap[s.trip]) tripMap[s.trip] = [];
+    tripMap[s.trip].push(s);
+  });
+
+  let html = '<h2 class="section-title">My Trips</h2>';
+  if(travelShirts.length === 0){
+    html += `<p style="color:#7c7464;">No travel shirts yet.</p>`;
+  } else {
+    html += Object.keys(tripMap).map(trip => `
+      <h2 class="section-title" style="margin-top:24px;font-size:18px;">${escapeHtml(trip)} <span style="font-size:14px;font-family:'Work Sans',sans-serif;font-weight:400;color:#7c7464;">(${tripMap[trip].length} shirt${tripMap[trip].length===1?'':'s'})</span></h2>
+      <div class="year-grid">${tripMap[trip].map(renderCard).join('')}</div>
+    `).join('');
+  }
+
+  // --- Souvenirs ---
+  const souvenirShirts = allShirts.filter(s => s.isSouvenir);
+  const souvenirMap = {};
+  souvenirShirts.forEach(s => {
+    const key = s.trip || 'Unknown';
+    if(!souvenirMap[key]) souvenirMap[key] = [];
+    souvenirMap[key].push(s);
+  });
+
+  html += '<h2 class="section-title" style="margin-top:40px;">Souvenirs</h2>';
+  if(souvenirShirts.length === 0){
+    html += `<p style="color:#7c7464;">No souvenirs yet.</p>`;
+  } else {
+    html += Object.keys(souvenirMap).map(trip => `
+      <h2 class="section-title" style="margin-top:24px;font-size:18px;">${escapeHtml(trip)} <span style="font-size:14px;font-family:'Work Sans',sans-serif;font-weight:400;color:#7c7464;">(${souvenirMap[trip].length} shirt${souvenirMap[trip].length===1?'':'s'})</span></h2>
+      <div class="year-grid">${souvenirMap[trip].map(renderCard).join('')}</div>
+    `).join('');
+  }
+
+  content.innerHTML = html;
 }
 
 function renderClubs(){
