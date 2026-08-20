@@ -520,7 +520,7 @@
 <header class="top">
   <div style="display:flex;align-items:baseline;gap:12px;">
     <h1>The Kit <span>Room</span></h1>
-    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v3.3</span>
+    <span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v3.4</span>
   </div>
   <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
   <nav class="tabs">
@@ -648,11 +648,15 @@
       </div>
       <div>
         <label for="filt-brand">Brand</label>
-        <input type="text" id="filt-brand" placeholder="Search brand…">
+        <select id="filt-brand">
+          <option value="">All brands</option>
+        </select>
       </div>
       <div>
         <label for="filt-store">Store</label>
-        <input type="text" id="filt-store" placeholder="Search store…">
+        <select id="filt-store">
+          <option value="">All stores</option>
+        </select>
       </div>
       <div>
         <label for="filt-year">Year</label>
@@ -994,9 +998,10 @@ const filtSpecials = document.getElementById('filt-specials');
   el.addEventListener('change', renderGrid);
 });
 filtSpecials.addEventListener('change', renderGrid);
-[filtClub, filtSeason, filtBrand, filtStore, filtYear].forEach(el=>{
+[filtClub, filtSeason, filtYear].forEach(el=>{
   el.addEventListener('keydown', e=>{ if(e.key==='Enter') renderGrid(); });
 });
+[filtBrand, filtStore].forEach(el=>{ el.addEventListener('change', renderGrid); });
 document.getElementById('search-btn').addEventListener('click', renderGrid);
 
 document.getElementById('clear-filters').addEventListener('click', ()=>{
@@ -1015,8 +1020,8 @@ function renderGrid(){
     if(filtType.value && s.type !== filtType.value) return false;
     if(filtContinent.value && s.continent !== filtContinent.value) return false;
     if(filtCountry.value && s.country !== filtCountry.value) return false;
-    if(filtBrand.value && !(s.brand||'').toLowerCase().includes(filtBrand.value.toLowerCase())) return false;
-    if(filtStore.value && !(s.store||'').toLowerCase().includes(filtStore.value.toLowerCase())) return false;
+    if(filtBrand.value && (s.brand||'') !== filtBrand.value) return false;
+    if(filtStore.value && (s.store||'') !== filtStore.value) return false;
     if(filtYear.value && String(s.year) !== filtYear.value) return false;
     return true;
   });
@@ -1440,13 +1445,26 @@ async function loadWorldData(){
 }
 
 function populateCountryDropdowns(){
-  const opts = countryNames.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+  const allOpts = countryNames.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
 
   const fCountry = document.getElementById('f-country');
-  fCountry.innerHTML = '<option value="">Choose country…</option>' + opts;
+  fCountry.innerHTML = '<option value="">Choose country…</option>' + allOpts;
 
+  // Only show countries present in the collection
+  const usedCountries = [...new Set(allShirts.map(s=>s.country).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
   const filtCountrySel = document.getElementById('filt-country');
-  filtCountrySel.innerHTML = '<option value="">All countries</option>' + opts;
+  filtCountrySel.innerHTML = '<option value="">All countries</option>' +
+    usedCountries.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+
+  // Populate brand dropdown
+  const brands = [...new Set(allShirts.map(s=>s.brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  document.getElementById('filt-brand').innerHTML = '<option value="">All brands</option>' +
+    brands.map(b=>`<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join('');
+
+  // Populate store dropdown
+  const stores = [...new Set(allShirts.map(s=>s.store).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+  document.getElementById('filt-store').innerHTML = '<option value="">All stores</option>' +
+    stores.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
 }
 
 function renderMap(){
