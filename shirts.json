@@ -3265,6 +3265,38 @@
         "isSouvenir":  false
     },
     {
+        "id":  204,
+        "club":  "Manchester United",
+        "season":  "2026/2027",
+        "type":  "Away",
+        "continent":  "Europe",
+        "country":  "England",
+        "brand":  "Adidas",
+        "year":  2026,
+        "image":  null,
+        "player":  null,
+        "trip":  "Manchester & Liverpool 2026",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
+    },
+    {
+        "id":  205,
+        "club":  "Liverpool",
+        "season":  "2026/2027",
+        "type":  "Away",
+        "continent":  "Europe",
+        "country":  "England",
+        "brand":  "Adidas",
+        "year":  2026,
+        "image":  null,
+        "player":  null,
+        "trip":  "Manchester & Liverpool 2026",
+        "story":  null,
+        "store":  null,
+        "isSouvenir":  false
+    },
+    {
         "id":  "s1",
         "club":  "Ajax",
         "season":  "1973",
