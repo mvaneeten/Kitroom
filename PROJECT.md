@@ -32,16 +32,16 @@ Kitroom/
 - Caches: `./`, `./index.html`, `./manifest.json`, `./shirts.json`, icons
 - Strategy: cache-first; caches new successful same-origin GET responses; falls back to `index.html` for navigations
 
-Current version: **v29**
+Current version: **v30**
 
 ---
 
 ## App Version
 
-In `index.html`, find the version span in the header:
+In `index.html`, find the version span inside the header `<h1>`:
 
 ```html
-<span style="font-size:12px;opacity:0.5;letter-spacing:1px;">v3.6</span>
+<span class="version">v3.7</span>
 ```
 
 Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy.
