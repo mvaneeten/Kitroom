@@ -861,7 +861,7 @@
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8 12 12 4 24l8 6 4-4v30h32V26l4 4 8-6-8-12-10-4c-2 5-6 7-10 7s-8-2-10-7Z" fill="#a50d24"/></svg>
       </div>
       <div>
-        <h1>The Kit <span>Room</span><span class="version">v4.4</span></h1>
+        <h1>The Kit <span>Room</span><span class="version">v4.5</span></h1>
         <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
       </div>
     </div>
@@ -1976,7 +1976,15 @@ function renderMap(){
   document.getElementById('stat-countries').textContent = countriesRepresented;
   document.getElementById('stat-clubs').textContent = clubs;
 
-  const maxCount = Math.max(1, ...Object.values(counts));
+  // the world atlas only has "United Kingdom", so roll the home nations up for colouring
+  const mapAlias = {'England':'United Kingdom','Scotland':'United Kingdom','Wales':'United Kingdom','Northern Ireland':'United Kingdom'};
+  const mapCounts = {};
+  Object.entries(counts).forEach(([name,c])=>{
+    const key = mapAlias[name] || name;
+    mapCounts[key] = (mapCounts[key]||0) + c;
+  });
+
+  const maxCount = Math.max(1, ...Object.values(mapCounts));
   const colorScale = d3.scaleSequential().domain([1, maxCount]).interpolator(d3.interpolateRgb('#f5d878', '#7a4800'));
 
   const container = document.getElementById('worldmap-container');
@@ -2000,12 +2008,12 @@ function renderMap(){
     .join('path')
     .attr('d', path)
     .attr('fill', d=>{
-      const c = counts[d.properties.name] || 0;
+      const c = mapCounts[d.properties.name] || 0;
       return c > 0 ? colorScale(c) : '#e6ddca';
     })
-    .attr('class', d=> (counts[d.properties.name]||0) > 0 ? 'has-shirts' : '')
+    .attr('class', d=> (mapCounts[d.properties.name]||0) > 0 ? 'has-shirts' : '')
     .on('mousemove', (event,d)=>{
-      const c = counts[d.properties.name] || 0;
+      const c = mapCounts[d.properties.name] || 0;
       const rect = container.getBoundingClientRect();
       tooltip.style.display = 'block';
       tooltip.style.left = (event.clientX - rect.left + 12) + 'px';
