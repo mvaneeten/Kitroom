@@ -32,7 +32,7 @@ Kitroom/
 - Caches: `./`, `./index.html`, `./manifest.json`, `./shirts.json`, icons
 - Strategy: cache-first; caches new successful same-origin GET responses; falls back to `index.html` for navigations
 
-Current version: **v34**
+Current version: **v35**
 
 ---
 
@@ -41,7 +41,7 @@ Current version: **v34**
 In `index.html`, find the version span inside the header `<h1>`:
 
 ```html
-<span class="version">v4.1</span>
+<span class="version">v4.2</span>
 ```
 
 Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy.
@@ -65,6 +65,8 @@ Colour scheme: **red and white** (since v3.8, darkened in v3.9). The tab bar is 
 | `--line` | `#ece2e3` | Borders |
 | `--red` / `--red-dark` | `#b80f28` / `#860a1c` | Type tag / detail badge |
 | `--card-bg` | `#ffffff` | Card background |
+
+Type tag colours (v4.2): `typeClass(type)` in JS returns `type-home` / `type-away` / `type-third` / `type-fourth` / `type-limited` / `type-other`. Each class sets `--tag-hi` and `--tag`, used by `.badge`, `.type-tag`, `.type-badge` and `.detail-badge`. Home = red, Away = navy, Third = green, Fourth = purple, Limited Edition = gold, everything else (Other, Originals, Baseball) = grey.
 
 Fonts: **Anton** (headings/tabs, uppercase), **Work Sans** (body)
 

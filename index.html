@@ -359,10 +359,10 @@
   .detail-season{font-size:18px;color:var(--muted);font-weight:600;margin-top:6px;}
   .detail-badge{
     display:inline-block;
-    background:linear-gradient(180deg, #d62a42, var(--red-dark));
+    background:linear-gradient(180deg, var(--tag-hi,#d62a42), var(--tag,var(--red-dark)));
     color:#fff;font-family:'Anton',sans-serif;font-size:13px;
     padding:5px 14px;border-radius:999px;letter-spacing:1.2px;text-transform:uppercase;
-    box-shadow:0 4px 12px rgba(192,57,43,.3);
+    box-shadow:0 4px 12px rgba(0,0,0,.22);
   }
   .detail-table{width:100%;border-collapse:collapse;margin-top:4px;}
   .detail-table td{padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top;line-height:1.5;}
@@ -491,13 +491,20 @@
     backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
     padding:3px 9px;border-radius:999px;
   }
-  .type-tag{
-    position:absolute;top:8px;left:8px;z-index:2;
+  /* ---------- Type colours ---------- */
+  .type-home    {--tag-hi:#d62a42;--tag:#a50d24;}
+  .type-away    {--tag-hi:#2f5b8f;--tag:#1b365d;}
+  .type-third   {--tag-hi:#2e9a62;--tag:#1b6b42;}
+  .type-fourth  {--tag-hi:#8a4fc0;--tag:#5e2a8c;}
+  .type-limited {--tag-hi:#e0ac2b;--tag:#a87708;}
+  .type-other   {--tag-hi:#7a7273;--tag:#4a4243;}
+
+  .type-tag{    position:absolute;top:8px;left:8px;z-index:2;
     font-family:'Anton',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;
     color:#fff;
-    background:linear-gradient(180deg, #d62a42, var(--red-dark));
+    background:linear-gradient(180deg, var(--tag-hi,#d62a42), var(--tag,var(--red-dark)));
     padding:3px 10px;border-radius:999px;
-    box-shadow:0 3px 8px rgba(150,43,32,.3);
+    box-shadow:0 3px 8px rgba(0,0,0,.25);
   }
 
   /* ---------- Cards grid ---------- */
@@ -524,7 +531,7 @@
     top:10px;
     left:10px;
     z-index:3;
-    background:linear-gradient(180deg, var(--accent-light), var(--accent));
+    background:linear-gradient(180deg, var(--tag-hi,var(--accent-light)), var(--tag,var(--accent)));
     color:#fff;
     font-family:'Anton', sans-serif;
     font-size:12px;
@@ -671,7 +678,7 @@
   }
   .shirt-list .type-badge{
     font-family:'Anton',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;
-    background:linear-gradient(180deg, var(--accent-light), var(--accent));color:#fff;
+    background:linear-gradient(180deg, var(--tag-hi,var(--accent-light)), var(--tag,var(--accent)));color:#fff;
     padding:3px 10px;border-radius:999px;white-space:nowrap;
   }
   .shirt-list .list-actions button{
@@ -854,7 +861,7 @@
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8 12 12 4 24l8 6 4-4v30h32V26l4 4 8-6-8-12-10-4c-2 5-6 7-10 7s-8-2-10-7Z" fill="#a50d24"/></svg>
       </div>
       <div>
-        <h1>The Kit <span>Room</span><span class="version">v4.1</span></h1>
+        <h1>The Kit <span>Room</span><span class="version">v4.2</span></h1>
         <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
       </div>
     </div>
@@ -1457,7 +1464,7 @@ function renderSection(shirts){
                 ${s.notes ? `<div class="sub" style="font-style:italic;">${escapeHtml(s.notes)}</div>` : ''}
               </td>
               <td>${escapeHtml(s.season)}</td>
-              <td><span class="type-badge">${escapeHtml(s.type)}</span></td>
+              <td><span class="type-badge ${typeClass(s.type)}">${escapeHtml(s.type)}</span></td>
               <td>${escapeHtml(s.country)}</td>
               <td>${escapeHtml(s.brand)}</td>
               <td>${s.year}</td>
@@ -1473,7 +1480,7 @@ function renderSection(shirts){
   } else {
     return `<div class="grid">${shirts.map(s=>`
       <div class="card">
-        <div class="badge">${s.type}</div>
+        <div class="badge ${typeClass(s.type)}">${escapeHtml(s.type)}</div>
         <div class="photo" onclick="openDetail('${s.id}')">
           <div class="num-tag">#${s.id}</div>
           <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)} ${escapeHtml(s.season)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -1517,7 +1524,9 @@ function openDetail(id){
   document.getElementById('detail-nr').textContent = `#${s.id}`;
   document.getElementById('detail-club').textContent = s.club;
   document.getElementById('detail-season').textContent = s.season;
-  document.getElementById('detail-type').textContent = s.type;
+  const detailType = document.getElementById('detail-type');
+  detailType.textContent = s.type;
+  detailType.className = 'detail-badge ' + typeClass(s.type);
 
   const rows = [
     ['Brand',     s.brand],
@@ -1551,6 +1560,11 @@ function closeDetail(){
 
 document.getElementById('detail-back-btn').addEventListener('click', closeDetail);
 
+function typeClass(type){
+  const map = {Home:'home', Away:'away', Third:'third', Fourth:'fourth', '4th':'fourth', 'Limited Edition':'limited'};
+  return 'type-' + (map[type] || 'other');
+}
+
 function escapeHtml(str){
   return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -1577,7 +1591,7 @@ function renderByYear(){
   const renderCard = s => `
     <div class="year-card" onclick="openDetail('${s.id}')">
       <div class="year-photo">
-        <div class="type-tag">${escapeHtml(s.type)}</div>
+        <div class="type-tag ${typeClass(s.type)}">${escapeHtml(s.type)}</div>
         <div class="num-tag">#${s.id}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -1656,7 +1670,7 @@ function renderAjax(){
   const renderCard = s => `
     <div class="year-card" onclick="openDetail('${s.id}')">
       <div class="year-photo">
-        <div class="type-tag">${escapeHtml(s.type)}</div>
+        <div class="type-tag ${typeClass(s.type)}">${escapeHtml(s.type)}</div>
         <div class="num-tag">#${s.id}</div>
         <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
