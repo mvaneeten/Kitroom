@@ -32,7 +32,7 @@ Kitroom/
 - Caches: `./`, `./index.html`, `./manifest.json`, `./shirts.json`, icons
 - Strategy: cache-first; caches new successful same-origin GET responses; falls back to `index.html` for navigations
 
-Current version: **v30**
+Current version: **v34**
 
 ---
 
@@ -41,7 +41,7 @@ Current version: **v30**
 In `index.html`, find the version span inside the header `<h1>`:
 
 ```html
-<span class="version">v3.7</span>
+<span class="version">v4.1</span>
 ```
 
 Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy.
@@ -52,14 +52,18 @@ Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy
 
 | Variable | Value | Use |
 |---|---|---|
-| `--pitch` | `#163a2f` | Header background (dark green) |
-| `--pitch-dark` | `#0e2a21` | Active tab text |
-| `--paper` | `#f6f1e7` | Page background |
-| `--paper-dim` | `#ece4d3` | Dimmed surface |
-| `--ink` | `#20281f` | Body text |
-| `--gold` | `#d9a629` | Accent, active tab |
-| `--line` | `#cdc3ac` | Borders |
-| `--red` | `#bd4330` | Type badge background |
+Colour scheme: **red and white** (since v3.8, darkened in v3.9). The tab bar is near-black red (`rgba(40,3,8,.96)`) with a white top line and a red bottom line, so it stands apart from the header. The world map keeps its own gold country colours, which are set in JS plus the inline legend gradient.
+
+| Variable | Value | Use |
+|---|---|---|
+| `--pitch` / `-dark` / `-deep` / `-light` | `#a50d24` / `#840a1d` / `#4f0510` / `#c4182f` | Main red: header, tab bar, headings, hero cards |
+| `--paper` | `#f8f4f4` | Page background (off-white) |
+| `--paper-dim` / `--paper-soft` | `#f1e9ea` / `#fcfafa` | Dimmed / soft surfaces |
+| `--ink` | `#231a1b` | Body text |
+| `--gold` / `-light` / `-dark` | `#ffffff` / `#ffffff` / `#f6d4d8` | Despite the name: **white highlight used on red backgrounds** (active tab, crest, big numbers) |
+| `--accent` / `-light` / `-dark` | `#b80f28` / `#d62a42` / `#860a1c` | Red accent on light backgrounds: badges, bars, Search button, focus ring |
+| `--line` | `#ece2e3` | Borders |
+| `--red` / `--red-dark` | `#b80f28` / `#860a1c` | Type tag / detail badge |
 | `--card-bg` | `#ffffff` | Card background |
 
 Fonts: **Anton** (headings/tabs, uppercase), **Work Sans** (body)
