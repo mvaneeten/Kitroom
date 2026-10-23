@@ -32,7 +32,7 @@ Kitroom/
 - Caches: `./`, `./index.html`, `./manifest.json`, `./shirts.json`, icons
 - Strategy: cache-first; caches new successful same-origin GET responses; falls back to `index.html` for navigations
 
-Current version: **v35**
+Current version: **v37**
 
 ---
 
@@ -41,7 +41,7 @@ Current version: **v35**
 In `index.html`, find the version span inside the header `<h1>`:
 
 ```html
-<span class="version">v4.2</span>
+<span class="version">v4.4</span>
 ```
 
 Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy.
@@ -87,6 +87,7 @@ Array of shirt objects. Current count: **205 regular + specials s1–s6 = 211 to
   "continent": "Europe",
   "country":   "England",
   "brand":     "Adidas",
+  "sponsor":   null,
   "year":      2026,
   "image":     null,
   "player":    null,
@@ -106,6 +107,7 @@ Array of shirt objects. Current count: **205 regular + specials s1–s6 = 211 to
 | `type` | `Home`, `Away`, `Third`, `4th`, `GK`, `Limited Edition`, `Other` |
 | `continent` | `Europe`, `South America`, `North America`, `Asia`, `Africa`, `Oceania` |
 | `image` | Override image filename (without path/ext). Falls back to `images/{id}.jpg` |
+| `sponsor` | Shirt sponsor (e.g. `"ABN AMRO"`), `null` if none. Added in v4.3 from the Numbers sheet; shown on the detail screen under Brand (v4.4) |
 | `player` | Format: `"11 - Godts"` |
 | `trip` | Trip name string, e.g. `"London May 2025"` |
 | `isSouvenir` | `true` = souvenir brought by someone else; `false` = bought on own trip |
@@ -174,7 +176,7 @@ closeDetail()    // returns to previous tab (stored in detailFromView)
 ```
 
 - Overlay: `position:fixed`, `background:var(--paper)`, `z-index:1000`
-- Shows: image, club, type badge, season, brand, country, continent, year, player (if set), notes (if set), store (if set), trip/souvenir info (if set), story (if set)
+- Shows: image, club, type badge, season, brand, sponsor (if set), country, continent, year, player (if set), notes (if set), store (if set), trip/souvenir info (if set), story (if set)
 - Label: "Souvenir from" when `isSouvenir`, "Bought on trip" otherwise
 
 ---
