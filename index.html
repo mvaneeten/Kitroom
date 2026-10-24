@@ -757,24 +757,37 @@
     cursor:pointer;
   }
   #worldmap path.has-shirts:hover{stroke:var(--pitch);stroke-width:1.5;}
+  #worldmap path.selected{stroke:var(--pitch);stroke-width:2.2;}
   .map-tooltip{
     position:absolute;
     pointer-events:none;
-    background:rgba(60,6,14,.92);
+    background:rgba(60,6,14,.94);
     backdrop-filter:blur(6px);
     color:var(--paper);
-    padding:7px 13px;
-    border-radius:10px;
+    padding:10px 12px;
+    border-radius:12px;
     font-size:13px;
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    box-shadow:0 10px 26px rgba(0,0,0,.3);
     display:none;
-    white-space:nowrap;
+    max-width:260px;
     z-index:10;
     font-family:'Work Sans',sans-serif;
   }
   .map-tooltip b{color:var(--gold-light);}
+  .map-tip-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-weight:600;white-space:nowrap;}
+  .map-tip-thumbs{display:grid;grid-template-columns:repeat(4,52px);gap:6px;margin-top:9px;}
+  .map-tip-thumbs img{width:52px;height:52px;object-fit:cover;border-radius:8px;background:#fff;display:block;}
+  .map-tip-foot{font-size:11px;opacity:.75;margin-top:8px;}
+  .map-panel{margin-top:26px;scroll-margin-top:80px;animation:viewIn .35s var(--ease);}
+  .map-panel-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .map-panel-head .group-title{flex:1;margin:0;}
+  .map-panel-head button{height:36px;padding:0 16px;font-size:13px;}
+  .country-table tbody tr[data-country]{cursor:pointer;}
+  .country-table tbody tr.selected td{background:#fdf0f1;}
+  .country-table tbody tr.selected td:first-child{box-shadow:inset 4px 0 0 var(--accent);}
   .map-legend{
     display:flex;
+    flex-wrap:wrap;
     align-items:center;
     gap:8px;
     margin-top:14px;
@@ -861,7 +874,7 @@
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8 12 12 4 24l8 6 4-4v30h32V26l4 4 8-6-8-12-10-4c-2 5-6 7-10 7s-8-2-10-7Z" fill="#a50d24"/></svg>
       </div>
       <div>
-        <h1>The Kit <span>Room</span><span class="version">v4.5</span></h1>
+        <h1>The Kit <span>Room</span><span class="version">v4.6</span></h1>
         <p>Your football shirt collection — catalogued, mapped, and ready to filter.</p>
       </div>
     </div>
@@ -1156,8 +1169,11 @@
         <span>Fewer</span>
         <div class="legend-swatch" id="legend-gradient" style="background:linear-gradient(90deg, #f5d878, #7a4800);"></div>
         <span>More</span>
+        <span style="margin-left:auto;">Hover a country to preview · click to see all shirts</span>
       </div>
     </div>
+
+    <div id="map-country-panel"></div>
 
     <div class="country-table">
       <table>
@@ -1976,11 +1992,9 @@ function renderMap(){
   document.getElementById('stat-countries').textContent = countriesRepresented;
   document.getElementById('stat-clubs').textContent = clubs;
 
-  // the world atlas only has "United Kingdom", so roll the home nations up for colouring
-  const mapAlias = {'England':'United Kingdom','Scotland':'United Kingdom','Wales':'United Kingdom','Northern Ireland':'United Kingdom'};
   const mapCounts = {};
   Object.entries(counts).forEach(([name,c])=>{
-    const key = mapAlias[name] || name;
+    const key = mapNameOf(name);
     mapCounts[key] = (mapCounts[key]||0) + c;
   });
 
@@ -2002,6 +2016,9 @@ function renderMap(){
   const path = d3.geoPath().projection(projection);
 
   const tooltip = document.getElementById('map-tooltip');
+  const wrap = tooltip.parentElement;
+  const noHover = window.matchMedia('(hover: none)').matches;
+  let tipFor = null;
 
   svg.selectAll('path')
     .data(worldFeatures)
@@ -2013,22 +2030,102 @@ function renderMap(){
     })
     .attr('class', d=> (mapCounts[d.properties.name]||0) > 0 ? 'has-shirts' : '')
     .on('mousemove', (event,d)=>{
-      const c = mapCounts[d.properties.name] || 0;
-      const rect = container.getBoundingClientRect();
+      if(noHover) return;
+      const name = d.properties.name;
+      if(tipFor !== name){
+        tipFor = name;
+        tooltip.innerHTML = mapTooltipHtml(name);
+      }
       tooltip.style.display = 'block';
-      tooltip.style.left = (event.clientX - rect.left + 12) + 'px';
-      tooltip.style.top = (event.clientY - rect.top + 12) + 'px';
-      tooltip.innerHTML = `${escapeHtml(d.properties.name)}: <b>${c}</b> shirt${c===1?'':'s'}`;
+      const r = wrap.getBoundingClientRect();
+      let x = event.clientX - r.left + 14;
+      let y = event.clientY - r.top + 14;
+      if(x + tooltip.offsetWidth > r.width - 8) x = event.clientX - r.left - tooltip.offsetWidth - 14;
+      if(y + tooltip.offsetHeight > r.height - 8) y = event.clientY - r.top - tooltip.offsetHeight - 14;
+      tooltip.style.left = Math.max(8, x) + 'px';
+      tooltip.style.top = Math.max(8, y) + 'px';
     })
-    .on('mouseleave', ()=>{ tooltip.style.display = 'none'; });
+    .on('mouseleave', ()=>{ tooltip.style.display = 'none'; tipFor = null; })
+    .on('click', (event,d)=>{
+      tooltip.style.display = 'none'; tipFor = null;
+      if((mapCounts[d.properties.name]||0) > 0) selectMapCountry(d.properties.name, true);
+    });
 
   // country table, sorted by count desc
   const tbody = document.getElementById('country-table-body');
   const rows = Object.entries(counts).sort((a,b)=> b[1]-a[1]);
   tbody.innerHTML = rows.length
-    ? rows.map(([name,c])=>`<tr><td>${escapeHtml(name)}</td><td>${c}</td></tr>`).join('')
+    ? rows.map(([name,c])=>`<tr data-country="${escapeHtml(name)}"><td>${escapeHtml(name)}</td><td>${c}</td></tr>`).join('')
     : `<tr><td colspan="2" style="text-align:center;color:#8a8071;">No shirts added yet</td></tr>`;
+
+  selectMapCountry(mapSelected, false);
 }
+
+// the world atlas only has "United Kingdom", so the home nations roll up into it on the map
+const MAP_ALIAS = {'England':'United Kingdom','Scotland':'United Kingdom','Wales':'United Kingdom','Northern Ireland':'United Kingdom'};
+const mapNameOf = country => MAP_ALIAS[country] || country;
+let mapSelected = null;
+
+function shirtsForCountry(name){
+  return allShirts
+    .filter(s => s.country === name || mapNameOf(s.country) === name)
+    .sort((a,b) => (b.year||0) - (a.year||0) || (Number(b.id)||0) - (Number(a.id)||0));
+}
+
+function mapTooltipHtml(name){
+  const list = shirtsForCountry(name);
+  const n = list.length;
+  const head = `<div class="map-tip-head"><span>${escapeHtml(name)}</span><b>${n} shirt${n===1?'':'s'}</b></div>`;
+  if(!n) return head;
+  const thumbs = list.slice(0, 8).map(s =>
+    `<img src="images/${s.image || s.id}.jpg" alt="" onerror="this.style.visibility='hidden'">`).join('');
+  const more = n > 8 ? `+${n-8} more · ` : '';
+  return `${head}<div class="map-tip-thumbs">${thumbs}</div><div class="map-tip-foot">${more}Click to see all</div>`;
+}
+
+function selectMapCountry(name, scroll){
+  mapSelected = name;
+  const panel = document.getElementById('map-country-panel');
+  const list = name ? shirtsForCountry(name) : [];
+  const mapName = name ? mapNameOf(name) : null;
+
+  d3.selectAll('#worldmap path').classed('selected', d => d.properties.name === mapName);
+  document.querySelectorAll('#country-table-body tr[data-country]').forEach(tr =>
+    tr.classList.toggle('selected', tr.dataset.country === name));
+
+  if(!list.length){ panel.innerHTML = ''; return; }
+
+  const card = s => `
+    <div class="year-card" onclick="openDetail('${s.id}')">
+      <div class="year-photo">
+        <div class="type-tag ${typeClass(s.type)}">${escapeHtml(s.type)}</div>
+        <div class="num-tag">#${s.id}</div>
+        <img src="images/${s.image || s.id}.jpg" alt="${escapeHtml(s.club)}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <span class="placeholder" style="display:none;">No photo</span>
+      </div>
+      <div class="year-info">
+        <strong title="${escapeHtml(s.club)}">${escapeHtml(s.club)}</strong>
+        <span>${escapeHtml(s.season)}</span>
+      </div>
+    </div>`;
+
+  panel.innerHTML = `
+    <div class="map-panel">
+      <div class="map-panel-head">
+        <h3 class="group-title">${escapeHtml(name)} <span class="count-pill">${list.length} shirt${list.length===1?'':'s'}</span></h3>
+        <button type="button" class="secondary" id="map-panel-close">Close</button>
+      </div>
+      <div class="year-grid">${list.map(card).join('')}</div>
+    </div>`;
+  document.getElementById('map-panel-close').addEventListener('click', () => selectMapCountry(null, false));
+  if(scroll) panel.firstElementChild.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.getElementById('country-table-body').addEventListener('click', e => {
+  const tr = e.target.closest('tr[data-country]');
+  if(tr) selectMapCountry(tr.dataset.country, true);
+});
 
 window.addEventListener('resize', ()=>{
   if(document.getElementById('view-map').classList.contains('active')) renderMap();

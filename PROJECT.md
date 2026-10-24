@@ -32,7 +32,7 @@ Kitroom/
 - Caches: `./`, `./index.html`, `./manifest.json`, `./shirts.json`, icons
 - Strategy: cache-first; caches new successful same-origin GET responses; falls back to `index.html` for navigations
 
-Current version: **v38**
+Current version: **v39**
 
 ---
 
@@ -41,7 +41,7 @@ Current version: **v38**
 In `index.html`, find the version span inside the header `<h1>`:
 
 ```html
-<span class="version">v4.5</span>
+<span class="version">v4.6</span>
 ```
 
 Bump both the app version and `CACHE_NAME` in `sw.js` on every meaningful deploy.
@@ -136,7 +136,7 @@ Specials always sort to the **end** of lists.
 | **Clubs** | Grouped by club, with country filter |
 | **Travel** | Shirts tied to trips + souvenirs |
 | **Stats** | Dashboard with charts |
-| **World map** | D3 + TopoJSON world map |
+| **World map** | D3 + TopoJSON world map. Hover = tooltip with up to 8 shirt photos; click a country or a row in the country table = panel with all its shirts (cards open the detail screen) |
 
 ---
 
@@ -163,6 +163,15 @@ Filters: Club (text), Season (text), Type (select), Continent (select), Country 
 - Groups shirts by `year` field
 - Type badge (red) on each card
 - Sort asc → lowest id first within year; sort desc → highest id first within year
+
+---
+
+## World Map
+
+- `renderMap()` colours countries by count. The world atlas only knows `United Kingdom`, so `MAP_ALIAS` rolls England/Scotland/Wales/Northern Ireland into it (`mapNameOf()`) for colouring, the tooltip and the panel; the country table still lists them separately.
+- `shirtsForCountry(name)`: shirts for a map or table country, newest first.
+- `mapTooltipHtml(name)`: hover tooltip (desktop only; skipped when the device has no hover).
+- `selectMapCountry(name, scroll)`: opens or closes the panel `#map-country-panel`, highlights the country on the map and in the table. The selection survives re-renders (resize, coming back from the detail screen).
 
 ---
 
